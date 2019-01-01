@@ -57,7 +57,7 @@ public class CircleAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
         ViewHolderCircleImage holderCircleImage = (ViewHolderCircleImage) viewHolder;
         //设置头像
         holderCircleImage.topSimple.setImageURI(Uri.parse(mResult.get(i).getHeadPic()));
@@ -73,17 +73,32 @@ public class CircleAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         holderCircleImage.circleDate.setText(date);
         //设置赞
         holderCircleImage.textNum.setText(mResult.get(i).getGreatNum() + "");
+        if(mResult.get(i).getWhetherGreat()==1){
+            holderCircleImage.buttonPraise.setImageResource(R.mipmap.common_btn_prise_s);
+        }else{
+            holderCircleImage.buttonPraise.setImageResource(R.mipmap.common_btn_prise_n);
+        }
 
-        holderCircleImage.buttonPraise.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(clickCallBack!=null){
-                    clickCallBack.callBack();
-                }
-            }
-        });
+       holderCircleImage.buttonPraise.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               if(clickCallBack!=null){
+                   clickCallBack.callBack(mResult.get(i).getWhetherGreat(),i);
+               }
+           }
+       });
     }
-
+    //
+    public void setPraise(int i,int position){
+        if(i == 1){
+            mResult.get(position).setWhetherGreat(2);
+            mResult.get(position).setGreatNum(mResult.get(position).getGreatNum()-1);
+        }else{
+            mResult.get(position).setWhetherGreat(1);
+            mResult.get(position).setGreatNum(mResult.get(position).getGreatNum()+1);
+        }
+        notifyDataSetChanged();
+    }
     @Override
     public int getItemCount() {
         return mResult.size();
@@ -118,6 +133,6 @@ public class CircleAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.clickCallBack = clickCallBack;
     }
     public interface ClickCallBack{
-        void callBack();
+        void callBack(int i,int position);
     }
 }

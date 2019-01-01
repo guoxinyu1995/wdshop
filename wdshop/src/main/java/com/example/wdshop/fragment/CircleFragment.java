@@ -72,6 +72,12 @@ public class CircleFragment extends BaseFragment implements Iview {
                 initData();
             }
         });
+        adaper.setClickCallBack(new CircleAdaper.ClickCallBack() {
+            @Override
+            public void callBack(int i, int position) {
+                adaper.setPraise(i,position);
+            }
+        });
     }
 
     /**

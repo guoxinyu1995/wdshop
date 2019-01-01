@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.wdshop.R;
+import com.example.wdshop.custom.NoScrollViewPager;
 import com.example.wdshop.fragment.CartFragment;
 import com.example.wdshop.fragment.CircleFragment;
 import com.example.wdshop.fragment.HomeFragment;
@@ -26,7 +27,7 @@ import butterknife.ButterKnife;
 public class HomeActivity extends BaseActivity {
 
     @BindView(R.id.viewpage)
-    ViewPager viewpage;
+    NoScrollViewPager viewpage;
     @BindView(R.id.radio_home)
     RadioButton radioHome;
     @BindView(R.id.radio_circle)
