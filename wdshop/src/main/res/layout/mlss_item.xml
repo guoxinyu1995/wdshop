@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<RelativeLayout
+    android:layout_width="@dimen/dp_321"
+    android:layout_height="@dimen/dp_118"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="@dimen/dp_5"
+    android:layout_marginBottom="@dimen/dp_5"
+    android:padding="@dimen/dp_10"
+    android:background="@drawable/circle_shape"
+    android:elevation="@dimen/dp_4"
+    >
+<com.facebook.drawee.view.SimpleDraweeView
+    android:id="@+id/mlss_image"
+    android:layout_width="@dimen/dp_85"
+    android:layout_height="@dimen/dp_98"
+    android:layout_marginRight="@dimen/dp_20"
+    />
+    <TextView
+        android:id="@+id/mlss_title"
+        android:layout_width="@dimen/dp_187"
+        android:layout_height="wrap_content"
+        android:maxLines="3"
+        android:layout_toRightOf="@+id/mlss_image"
+        android:ellipsize="end"
+        android:textSize="@dimen/sp_12"
+        android:textColor="#666"
+        />
+    <TextView
+        android:id="@+id/mlss_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/mlss_image"
+        android:layout_alignBottom="@+id/mlss_image"
+        android:textColor="#f00"
+        android:textSize="@dimen/sp_14"
+        />
+</RelativeLayout>
+</RelativeLayout>
