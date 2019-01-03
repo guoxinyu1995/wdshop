@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -41,6 +42,11 @@ public class HomeActivity extends BaseActivity {
     @BindView(R.id.group)
     RadioGroup group;
     private List<Fragment> list;
+    private HomeFragment homeFragment;
+    private CircleFragment circleFragment;
+    private CartFragment cartFragment;
+    private OrderFragment orderFragment;
+    private MineFragment mineFragment;
 
     /**
      * 初始化数据
@@ -57,11 +63,16 @@ public class HomeActivity extends BaseActivity {
     protected void initView(Bundle savedInstanceState) {
         ButterKnife.bind(this);
         list = new ArrayList<>();
-        list.add(new HomeFragment());
-        list.add(new CircleFragment());
-        list.add(new CartFragment());
-        list.add(new OrderFragment());
-        list.add(new MineFragment());
+        homeFragment = new HomeFragment();
+        circleFragment = new CircleFragment();
+        cartFragment = new CartFragment();
+        orderFragment = new OrderFragment();
+        mineFragment = new MineFragment();
+        list.add(homeFragment);
+        list.add(circleFragment);
+        list.add(cartFragment);
+        list.add(orderFragment);
+        list.add(mineFragment);
         //创建适配器
         viewpage.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -143,5 +154,12 @@ public class HomeActivity extends BaseActivity {
     protected int getLayoutResId() {
         return R.layout.activity_home;
     }
-
+    //监听返回键
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ){
+            homeFragment.getBackData(true);
+        }
+        return false;
+    }
 }

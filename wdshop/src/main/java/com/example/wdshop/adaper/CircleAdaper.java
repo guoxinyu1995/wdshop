@@ -83,7 +83,7 @@ public class CircleAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
            @Override
            public void onClick(View v) {
                if(clickCallBack!=null){
-                   clickCallBack.callBack(mResult.get(i).getWhetherGreat(),i);
+                   clickCallBack.callBack(mResult.get(i).getWhetherGreat(),i,mResult.get(i).getId());
                }
            }
        });
@@ -133,6 +133,6 @@ public class CircleAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.clickCallBack = clickCallBack;
     }
     public interface ClickCallBack{
-        void callBack(int i,int position);
+        void callBack(int i,int position,int id);
     }
 }

@@ -1,8 +1,10 @@
 package com.example.wdshop.network;
 import java.util.Map;
 
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -15,6 +17,7 @@ public interface BaseApis<E> {
     /**
      * Observable被观察者
      * */
+    @Headers("sessionId:sessionId")
     @GET
     Observable<ResponseBody> get(@Url String url);
 
@@ -23,6 +26,6 @@ public interface BaseApis<E> {
 
     @Multipart
     @POST
-    Observable<ResponseBody> postFormBody(@Url String url, @PartMap Map<String, ResponseBody> requestBodyMap);
+    Observable<ResponseBody> postFormBody(@Url String url, @PartMap Map<String, RequestBody> requestBodyMap);
 
 }

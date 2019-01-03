@@ -8,7 +8,7 @@
    <RelativeLayout
        android:layout_width="@dimen/dp_105"
        android:layout_height="wrap_content"
-       android:background="@drawable/circle_shape"
+       android:background="@drawable/recycle_item_shape"
        android:padding="@dimen/dp_10"
        >
        <com.facebook.drawee.view.SimpleDraweeView

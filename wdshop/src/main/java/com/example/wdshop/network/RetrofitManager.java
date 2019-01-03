@@ -1,13 +1,22 @@
 package com.example.wdshop.network;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.text.TextUtils;
+
+import com.example.wdshop.application.MyApplication;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -18,6 +27,7 @@ import rx.schedulers.Schedulers;
 
 public class RetrofitManager<E> {
     private final String BASE_URL = "http://172.17.8.100/small/";
+    //http://mobile.bwstudent.com/
     private static RetrofitManager instance;
     private final BaseApis baseApis;
     //单例
@@ -31,13 +41,30 @@ public class RetrofitManager<E> {
     }
     //无参构造
     public RetrofitManager() {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.readTimeout(10, TimeUnit.SECONDS);
         builder.writeTimeout(10, TimeUnit.SECONDS);
         builder.connectTimeout(10, TimeUnit.SECONDS);
-        builder.addInterceptor(interceptor);
+        builder.addInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request request = chain.request();
+                SharedPreferences preferences = MyApplication.getApplication().getSharedPreferences("User", Context.MODE_PRIVATE);
+                String userId = preferences.getString("userId", "");
+                String sessionId = preferences.getString("sessionId", "");
+                Request.Builder builder1 = request.newBuilder();
+                builder1.method(request.method(),request.body());
+
+                if(!TextUtils.isEmpty(userId)&&!TextUtils.isEmpty(sessionId)){
+                    builder1.addHeader("userId",userId);
+                    builder1.addHeader("sessionId",sessionId);
+                }
+
+                Request build = builder1.build();
+
+                return chain.proceed(build);
+            }
+        });
         builder.retryOnConnectionFailure(true);
         OkHttpClient build = builder.build();
         Retrofit retrofit = new Retrofit.Builder()
@@ -63,7 +90,7 @@ public class RetrofitManager<E> {
     /**
      * get
      */
-    public RetrofitManager get(String url,HttpListener listener) {
+    public void get(String url,HttpListener listener) {
         baseApis.get(url)
                 //后台执行在哪个线程
                 .subscribeOn(Schedulers.io())
@@ -71,7 +98,7 @@ public class RetrofitManager<E> {
                 .observeOn(AndroidSchedulers.mainThread())
                 //设置rxjava
                 .subscribe(getObserver(listener));
-        return instance;
+
     }
     /**
      * 观察者
@@ -110,7 +137,7 @@ public class RetrofitManager<E> {
     /**
      * 表单post请求
      */
-    public RetrofitManager postFormBody(String url, Map<String, RequestBody> map,HttpListener listener) {
+    public void postFormBody(String url, Map<String, RequestBody> map,HttpListener listener) {
         if (map == null) {
             map = new HashMap<>();
         }
@@ -121,12 +148,12 @@ public class RetrofitManager<E> {
                 .observeOn(AndroidSchedulers.mainThread())
                 //设置rxjava
                 .subscribe(getObserver(listener));
-        return instance;
+
     }
     /**
      * 普通post
      * */
-    public RetrofitManager post(String url,Map<String,String> map,HttpListener listener){
+    public void post(String url,Map<String,String> map,HttpListener listener){
         if(map == null){
             map = new HashMap<>();
         }
@@ -137,16 +164,11 @@ public class RetrofitManager<E> {
                 .observeOn(AndroidSchedulers.mainThread())
                 //设置rxjava
                 .subscribe(getObserver(listener));
-        return instance;
+
     }
-
-    //创建观察者
-
-
-
+    //定义接口
     public interface HttpListener {
         void onSuccess(String data);
-
         void onFail(String error);
     }
 }

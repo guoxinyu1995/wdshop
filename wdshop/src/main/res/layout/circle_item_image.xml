@@ -77,7 +77,7 @@
             android:layout_height="@dimen/dp_20"
             android:layout_below="@+id/center_simple"
             android:layout_marginTop="@dimen/dp_20"
-            android:background="@mipmap/common_btn_prise_n_hdpi"
+            android:background="@mipmap/common_btn_prise_n"
             android:layout_alignLeft="@+id/text_num"
             />
     </RelativeLayout>

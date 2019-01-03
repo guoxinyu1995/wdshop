@@ -153,6 +153,8 @@ public class LoginActivity extends BaseActivity implements Iview {
     public void requestData(Object o) {
         if (o instanceof LoginBean) {
             LoginBean bean = (LoginBean) o;
+            int userId = bean.getResult().getUserId();
+            String sessionId = bean.getResult().getSessionId();
             if (bean == null || !bean.isSuccess()) {
                 Toast.makeText(LoginActivity.this, bean.getMessage(), Toast.LENGTH_SHORT).show();
             } else {
@@ -171,6 +173,7 @@ public class LoginActivity extends BaseActivity implements Iview {
                     //提交
                     edit.commit();
                 }
+                sp.edit().putString("userId",String.valueOf(userId)).putString("sessionId",sessionId).commit();
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 LoginBean.ResultBean result = bean.getResult();
                 intent.putExtra("result",result);
@@ -179,7 +182,11 @@ public class LoginActivity extends BaseActivity implements Iview {
             }
         }
     }
-
+   /* int userId = loginBean.getResult().getUserId();
+    String sessionId = loginBean.getResult().getSessionId();
+    sharedPreferences = getSharedPreferences("Header", MODE_PRIVATE);
+                sharedPreferences.edit().putString("userId",userId+"").putString("sessionId",sessionId).commit();
+*/
     @Override
     public void requestFail(Object o) {
         if (o instanceof Exception) {

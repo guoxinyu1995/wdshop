@@ -14,6 +14,7 @@ import com.example.wdshop.activity.HomeActivity;
 import com.example.wdshop.activity.LoginActivity;
 import com.example.wdshop.adaper.CircleAdaper;
 import com.example.wdshop.api.Apis;
+import com.example.wdshop.bean.CircleAddBean;
 import com.example.wdshop.bean.CircleBean;
 import com.example.wdshop.bean.LoginBean;
 import com.example.wdshop.bean.RegisterBean;
@@ -22,6 +23,8 @@ import com.example.wdshop.view.Iview;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,18 +37,21 @@ public class CircleFragment extends BaseFragment implements Iview {
     Unbinder unbinder;
     private PresenterImpl presenter;
     private CircleAdaper adaper;
-    private int mPage ;
+    private int mPage;
     private int count = 5;
+    private int userId;
+    private String sessionId;
+
     /**
      * 初始化数据
      */
     @Override
     protected void initData() {
-        Intent intent =getActivity().getIntent();
+        Intent intent = getActivity().getIntent();
         LoginBean.ResultBean result = (LoginBean.ResultBean) intent.getSerializableExtra("result");
-        int userId = result.getUserId();
-        String sessionId = result.getSessionId();
-        presenter.getRequest(String.format(Apis.URL_FIND_CIRCLE_LIST_GET,userId,sessionId,mPage,count),CircleBean.class);
+        userId = result.getUserId();
+        sessionId = result.getSessionId();
+        presenter.getRequest(String.format(Apis.URL_FIND_CIRCLE_LIST_GET, userId, sessionId, mPage, count), CircleBean.class);
     }
 
     /**
@@ -74,8 +80,17 @@ public class CircleFragment extends BaseFragment implements Iview {
         });
         adaper.setClickCallBack(new CircleAdaper.ClickCallBack() {
             @Override
-            public void callBack(int i, int position) {
-                adaper.setPraise(i,position);
+            public void callBack(int i, int position, int id) {
+                if(i == 1){
+                    Map<String, String> addMap = new HashMap<>();
+                    addMap.put("id", String.valueOf(id));
+                    addMap.put("userId",String.valueOf(userId));
+                    addMap.put("sessionId",sessionId);
+                    presenter.startRequest(Apis.URL_CIRCLE_ADD_POST, addMap, CircleAddBean.class);
+                }else{
+
+                }
+                adaper.setPraise(i, position);
             }
         });
     }
@@ -90,21 +105,26 @@ public class CircleFragment extends BaseFragment implements Iview {
 
     @Override
     public void requestData(Object o) {
-        if(o instanceof CircleBean){
+        if (o instanceof CircleBean) {
             CircleBean bean = (CircleBean) o;
-            if(bean==null || !bean.isSuccess()){
-                Toast.makeText(getActivity(),bean.getMessage(),Toast.LENGTH_SHORT).show();
-            }else{
+            if (bean == null || !bean.isSuccess()) {
+                Toast.makeText(getActivity(), bean.getMessage(), Toast.LENGTH_SHORT).show();
+            } else {
                 adaper.setmResult(bean.getResult());
-                if(mPage == 1){
+                if (mPage == 1) {
                     adaper.setmResult(bean.getResult());
-                }else{
+                } else {
                     adaper.addmResult(bean.getResult());
                 }
                 mPage++;
                 xrecycleview.refreshComplete();
                 xrecycleview.loadMoreComplete();
 
+            }
+        }else if(o instanceof CircleAddBean){
+            CircleAddBean circleAddBean = (CircleAddBean) o;
+            if(circleAddBean==null || !circleAddBean.isSuccess()){
+                Toast.makeText(getActivity(),circleAddBean.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -130,5 +150,11 @@ public class CircleFragment extends BaseFragment implements Iview {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onDetach();
     }
 }

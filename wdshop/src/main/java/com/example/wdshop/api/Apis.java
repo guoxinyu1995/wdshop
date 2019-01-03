@@ -27,6 +27,14 @@ public class Apis {
      * 圈子列表 http://172.17.8.100/small/circle/v1/findCircleList
      */
     public static final String URL_FIND_CIRCLE_LIST_GET="circle/v1/findCircleList?userId=%d&sessionId=%s&page=%d&count=%d";
+    /**
+     *圈子点赞
+     * */
+    public static final String URL_CIRCLE_ADD_POST ="circle/verify/v1/addCircleGreat";
+    /**
+     *圈子取消点赞
+     * */
+    public static final String URL_CIRCLE_CANCLE_POST ="circle/verify/v1/cancelCircleGreat";
    /**
     * banner轮播图
     * */
@@ -35,4 +43,24 @@ public class Apis {
     * 首页商品展示
     * */
    public static final String URL_SHOP_SHOW_GET="commodity/v1/commodityList";
+   /**
+    * 类目一级
+    * */
+   public static final String URL_CATATGRAL_ONE_GET="commodity/v1/findFirstCategory";
+   /**
+    * 类目二级
+    * */
+   public static final String URL_CATATGRAL_TWO_GET="commodity/v1/findSecondCategory?firstCategoryId=%s";
+   /**
+    * 二级条目查询
+    * */
+   public static final String URL_CATATGRAL_FIND_GET="commodity/v1/findCommodityByCategory?categoryId=%s&page=%d&count=%d";
+   /**
+    *根据关键词查询商品信息
+    * */
+   public static final String URL_SEARCH_GET = "commodity/v1/findCommodityByKeyword?keyword=%s&page=%d&count=%d";
+   /**
+    *根据商品列表归属标签查询商品信息
+    * */
+   public static final String URL_MORE_GET = "commodity/v1/findCommodityListByLabel?labelId=%s&page=%d&count=%d";
 }
