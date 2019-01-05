@@ -122,7 +122,7 @@ public class RegisterActivity extends BaseActivity implements Iview {
         Map<String, String> map = new HashMap<>();
         map.put("phone", editPhone.getText().toString().trim());
         map.put("pwd", editPass.getText().toString().trim());
-        presenter.startRequest(Apis.POST_URL_USER_REGISTER, map, RegisterBean.class);
+        presenter.postRequest(Apis.POST_URL_USER_REGISTER, map, RegisterBean.class);
     }
 
     @Override

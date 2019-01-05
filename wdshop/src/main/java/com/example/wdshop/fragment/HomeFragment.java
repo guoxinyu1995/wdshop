@@ -33,6 +33,7 @@ import com.example.wdshop.bean.HomeFragmentBean;
 import com.example.wdshop.bean.MoreBean;
 import com.example.wdshop.bean.SearchBean;
 import com.example.wdshop.presents.PresenterImpl;
+import com.example.wdshop.util.EditTextUtils;
 import com.example.wdshop.view.Iview;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.stx.xhb.xbanner.XBanner;
@@ -139,6 +140,9 @@ public class HomeFragment extends BaseFragment implements Iview {
         getFashion();
         //品质
         getQuality();
+        //初始化输入框失去焦点
+        EditTextUtils.losePoint(getActivity(),homeEditxSearch);
+
     }
 
     //品质生活
@@ -301,7 +305,7 @@ public class HomeFragment extends BaseFragment implements Iview {
     private boolean flag = true;
 
     @OnClick({R.id.home_image_search, R.id.home_image_category, R.id.hot_image_btn,
-            R.id.fashion_image_btn, R.id.quality_image_btn})
+            R.id.fashion_image_btn, R.id.quality_image_btn,R.id.home_editx_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             //点击显示类目页
@@ -324,12 +328,16 @@ public class HomeFragment extends BaseFragment implements Iview {
                 String shop = homeEditxSearch.getText().toString().trim();
                 presenter.getRequest(String.format(Apis.URL_SEARCH_GET, shop, mPage, mCount), SearchBean.class);
                 getSearch();
+                homeEditxSearch.setText("" +
+                        "");
                 break;
             //热销商品加载更多
             case R.id.hot_image_btn:
                 moreText.setText("热销商品");
                 moreText.setTextColor(Color.parseColor("#ff7f57"));
                 moreImage.setBackgroundResource(R.mipmap.bg_rxxp_syf);
+                categoryOneRecycle.setVisibility(View.GONE);
+                categoryTwoRecycle.setVisibility(View.GONE);
                 getMoreId(reId);
                 getMoreRecycle(reId);
                 break;
@@ -338,6 +346,8 @@ public class HomeFragment extends BaseFragment implements Iview {
                 moreText.setText("魔力时尚");
                 moreText.setTextColor(Color.parseColor("#6699ff"));
                 moreImage.setBackgroundResource(R.mipmap.bg_mlss_syf);
+                categoryOneRecycle.setVisibility(View.GONE);
+                categoryTwoRecycle.setVisibility(View.GONE);
                 getMoreId(mlId);
                 getMoreRecycle(mlId);
                 break;
@@ -346,8 +356,14 @@ public class HomeFragment extends BaseFragment implements Iview {
                 moreText.setText("品质生活");
                 moreText.setTextColor(Color.parseColor("#ff6600"));
                 moreImage.setBackgroundResource(R.mipmap.bg_pzsh_syf);
+                categoryOneRecycle.setVisibility(View.GONE);
+                categoryTwoRecycle.setVisibility(View.GONE);
                 getMoreId(pzId);
                 getMoreRecycle(pzId);
+                break;
+            case R.id.home_editx_search:
+                //点击输入框获得焦点
+                EditTextUtils.searchPoint(getActivity(),homeEditxSearch);
                 break;
             default:
                 break;
@@ -407,6 +423,11 @@ public class HomeFragment extends BaseFragment implements Iview {
         findRecycle.setAdapter(searchAdaper);
         //scrollView隐藏
         scrollView.setVisibility(View.GONE);
+        xRecyclerView.setVisibility(View.GONE);
+        imageView.setVisibility(View.GONE);
+        moreText.setVisibility(View.GONE);
+        textView.setVisibility(View.GONE);
+        moreImage.setVisibility(View.GONE);
         //展示数据显示
         findRecycle.setVisibility(View.VISIBLE);
     }
@@ -445,6 +466,11 @@ public class HomeFragment extends BaseFragment implements Iview {
                 categoryTwoRecycle.setVisibility(View.GONE);
                 scrollView.setVisibility(View.GONE);
                 findRecycle.setVisibility(View.VISIBLE);
+                xRecyclerView.setVisibility(View.GONE);
+                moreText.setVisibility(View.GONE);
+                moreImage.setVisibility(View.GONE);
+                imageView.setVisibility(View.GONE);
+                textView.setVisibility(View.GONE);
                 presenter.getRequest(String.format(Apis.URL_CATATGRAL_FIND_GET, id, mPage, mCount), CatagralFindBean.class);
             }
         });

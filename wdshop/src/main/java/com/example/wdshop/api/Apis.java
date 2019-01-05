@@ -34,7 +34,7 @@ public class Apis {
     /**
      *圈子取消点赞
      * */
-    public static final String URL_CIRCLE_CANCLE_POST ="circle/verify/v1/cancelCircleGreat";
+    public static final String URL_CIRCLE_CANCLE_DELETE ="circle/verify/v1/cancelCircleGreat?circleId=%d";
    /**
     * banner轮播图
     * */

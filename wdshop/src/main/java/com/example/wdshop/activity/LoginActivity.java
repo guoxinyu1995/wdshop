@@ -57,7 +57,7 @@ public class LoginActivity extends BaseActivity implements Iview {
         Map<String, String> map = new HashMap<>();
         map.put("phone", editPhone.getText().toString().trim());
         map.put("pwd", editPass.getText().toString().trim());
-        presenter.startRequest(Apis.POST_URL_USER_LOGIN, map, LoginBean.class);
+        presenter.postRequest(Apis.POST_URL_USER_LOGIN, map, LoginBean.class);
     }
 
     @Override
@@ -182,12 +182,6 @@ public class LoginActivity extends BaseActivity implements Iview {
             }
         }
     }
-   /* int userId = loginBean.getResult().getUserId();
-    String sessionId = loginBean.getResult().getSessionId();
-    sharedPreferences = getSharedPreferences("Header", MODE_PRIVATE);
-                sharedPreferences.edit().putString("userId",userId+"").putString("sessionId",sessionId).commit();
-*/
-    @Override
     public void requestFail(Object o) {
         if (o instanceof Exception) {
             Exception e = (Exception) o;

@@ -3,6 +3,7 @@ import java.util.Map;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
@@ -17,7 +18,6 @@ public interface BaseApis<E> {
     /**
      * Observable被观察者
      * */
-    @Headers("sessionId:sessionId")
     @GET
     Observable<ResponseBody> get(@Url String url);
 
@@ -28,4 +28,6 @@ public interface BaseApis<E> {
     @POST
     Observable<ResponseBody> postFormBody(@Url String url, @PartMap Map<String, RequestBody> requestBodyMap);
 
+    @DELETE
+    Observable<ResponseBody> delete(@Url String url);
 }

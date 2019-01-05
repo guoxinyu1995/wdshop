@@ -26,8 +26,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class RetrofitManager<E> {
-    private final String BASE_URL = "http://172.17.8.100/small/";
-    //http://mobile.bwstudent.com/
+    private final String BASE_URL = "http://mobile.bwstudent.com/small/";
+    //http://172.17.8.100/
     private static RetrofitManager instance;
     private final BaseApis baseApis;
     //单例
@@ -98,7 +98,18 @@ public class RetrofitManager<E> {
                 .observeOn(AndroidSchedulers.mainThread())
                 //设置rxjava
                 .subscribe(getObserver(listener));
-
+    }
+    /**
+     * delete
+     * */
+    public void delete(String url,HttpListener listener) {
+        baseApis.delete(url)
+                //后台执行在哪个线程
+                .subscribeOn(Schedulers.io())
+                //最终完成后执行在哪个线程
+                .observeOn(AndroidSchedulers.mainThread())
+                //设置rxjava
+                .subscribe(getObserver(listener));
     }
     /**
      * 观察者

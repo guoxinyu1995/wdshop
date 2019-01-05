@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 public class CircleAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<CircleBean.ResultBean> mResult;
     private Context mContext;
+
     public CircleAdaper(Context mContext) {
         this.mContext = mContext;
         mResult = new ArrayList<>();
@@ -73,39 +74,42 @@ public class CircleAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         holderCircleImage.circleDate.setText(date);
         //设置赞
         holderCircleImage.textNum.setText(mResult.get(i).getGreatNum() + "");
-        if(mResult.get(i).getWhetherGreat()==1){
+        if (mResult.get(i).getWhetherGreat() == 1) {
             holderCircleImage.buttonPraise.setImageResource(R.mipmap.common_btn_prise_s);
-        }else{
+        }else {
             holderCircleImage.buttonPraise.setImageResource(R.mipmap.common_btn_prise_n);
         }
 
-       holderCircleImage.buttonPraise.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               if(clickCallBack!=null){
-                   clickCallBack.callBack(mResult.get(i).getWhetherGreat(),i,mResult.get(i).getId());
-               }
-           }
-       });
+        holderCircleImage.buttonPraise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clickCallBack != null) {
+                    clickCallBack.callBack(mResult.get(i).getWhetherGreat(), i, mResult.get(i).getId());
+                }
+            }
+        });
     }
-    //
-    public void setPraise(int i,int position){
-        if(i == 1){
-            mResult.get(position).setWhetherGreat(2);
-            mResult.get(position).setGreatNum(mResult.get(position).getGreatNum()-1);
-        }else{
-            mResult.get(position).setWhetherGreat(1);
-            mResult.get(position).setGreatNum(mResult.get(position).getGreatNum()+1);
-        }
+
+    //点赞的方法
+    public void getGivePraise(int position) {
+        mResult.get(position).setWhetherGreat(1);
+        mResult.get(position).setGreatNum(mResult.get(position).getGreatNum() + 1);
+        notifyDataSetChanged();
+    }
+    //取消点赞的方法
+    public void getCancelPraise(int position) {
+        mResult.get(position).setWhetherGreat(2);
+        mResult.get(position).setGreatNum(mResult.get(position).getGreatNum() - 1);
         notifyDataSetChanged();
     }
     @Override
     public int getItemCount() {
         return mResult.size();
     }
+
     /**
      * 创建ViewHolder
-     * */
+     */
     class ViewHolderCircleImage extends RecyclerView.ViewHolder {
         @BindView(R.id.top_simple)
         SimpleDraweeView topSimple;
@@ -127,12 +131,15 @@ public class CircleAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ButterKnife.bind(this, itemView);
         }
     }
+
     //定义接口
     private ClickCallBack clickCallBack;
-    public void setClickCallBack(ClickCallBack clickCallBack){
+
+    public void setClickCallBack(ClickCallBack clickCallBack) {
         this.clickCallBack = clickCallBack;
     }
-    public interface ClickCallBack{
-        void callBack(int i,int position,int id);
+
+    public interface ClickCallBack {
+        void callBack(int i, int position, int id);
     }
 }

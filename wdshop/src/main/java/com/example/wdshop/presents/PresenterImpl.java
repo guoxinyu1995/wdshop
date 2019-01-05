@@ -18,8 +18,8 @@ public class PresenterImpl implements Ipresenter {
      * post
      * */
     @Override
-    public void startRequest(String url, Map<String, String> map, Class clazz) {
-        model.requestData(url, map, clazz, new MyCallBack() {
+    public void postRequest(String url, Map<String, String> map, Class clazz) {
+        model.requestPost(url, map, clazz, new MyCallBack() {
             @Override
             public void onSuccess(Object data) {
                 mIview.requestData(data);
@@ -36,6 +36,23 @@ public class PresenterImpl implements Ipresenter {
     @Override
     public void getRequest(String url, Class clazz) {
         model.requestGet(url, clazz, new MyCallBack() {
+            @Override
+            public void onSuccess(Object data) {
+                mIview.requestData(data);
+            }
+
+            @Override
+            public void onFail(String error) {
+                mIview.requestFail(error);
+            }
+        });
+    }
+    /**
+     * delete
+     * */
+    @Override
+    public void deleteRequest(String url, Class clazz) {
+        model.requestDelete(url, clazz, new MyCallBack() {
             @Override
             public void onSuccess(Object data) {
                 mIview.requestData(data);

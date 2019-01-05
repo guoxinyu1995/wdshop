@@ -10,8 +10,9 @@ public class ModelImpl implements Imodel {
     /**
      * post
      * */
+
     @Override
-    public void requestData(String url, final Map<String, String> map, final Class clazz, final MyCallBack myCallBack) {
+    public void requestPost(String url, Map<String, String> map, final Class clazz, final MyCallBack myCallBack) {
         this.myCallBack = myCallBack;
         RetrofitManager.getInstance().post(url,map,new RetrofitManager.HttpListener() {
             @Override
@@ -38,6 +39,7 @@ public class ModelImpl implements Imodel {
             }
         });
     }
+
     /**
      * get
      * */
@@ -59,6 +61,33 @@ public class ModelImpl implements Imodel {
                 }
             }
 
+            @Override
+            public void onFail(String error) {
+                if(myCallBack!=null){
+                    myCallBack.onFail(error);
+                }
+            }
+        });
+    }
+    /**
+     * delete
+     * */
+    @Override
+    public void requestDelete(String url, final Class clazz, final MyCallBack myCallBack) {
+        RetrofitManager.getInstance().delete(url, new RetrofitManager.HttpListener() {
+            @Override
+            public void onSuccess(String data) {
+                try {
+                    Object o = new Gson().fromJson(data, clazz);
+                    if(myCallBack!=null){
+                        myCallBack.onSuccess(o);
+                    }
+                }catch (Exception e){
+                    if(myCallBack!=null){
+                        myCallBack.onFail(e.getMessage());
+                    }
+                }
+            }
             @Override
             public void onFail(String error) {
                 if(myCallBack!=null){
