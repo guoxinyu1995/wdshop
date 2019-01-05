@@ -31,7 +31,8 @@
         <activity
             android:name=".activity.HomeActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".activity.PresonalDataActivity"></activity>
+        <activity android:name=".activity.PresonalDataActivity" />
+        <activity android:name=".activity.ParticularsActivity"></activity>
     </application>
 
 </manifest>

@@ -27,7 +27,6 @@ import rx.schedulers.Schedulers;
 
 public class RetrofitManager<E> {
     private final String BASE_URL = "http://mobile.bwstudent.com/small/";
-    //http://172.17.8.100/
     private static RetrofitManager instance;
     private final BaseApis baseApis;
     //单例
@@ -170,6 +169,22 @@ public class RetrofitManager<E> {
         }
         baseApis.post(url,map)
                  // 后台执行在哪个线程
+                .subscribeOn(Schedulers.io())
+                //最终完成后执行在哪个线程
+                .observeOn(AndroidSchedulers.mainThread())
+                //设置rxjava
+                .subscribe(getObserver(listener));
+
+    }
+    /**
+     *  普通put
+     * */
+    public void put(String url,Map<String,String> map,HttpListener listener){
+        if(map == null){
+            map = new HashMap<>();
+        }
+        baseApis.put(url,map)
+                // 后台执行在哪个线程
                 .subscribeOn(Schedulers.io())
                 //最终完成后执行在哪个线程
                 .observeOn(AndroidSchedulers.mainThread())

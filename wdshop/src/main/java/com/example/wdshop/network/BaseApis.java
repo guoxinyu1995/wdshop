@@ -30,4 +30,7 @@ public interface BaseApis<E> {
 
     @DELETE
     Observable<ResponseBody> delete(@Url String url);
+
+    @PUT
+    Observable<ResponseBody> put(@Url String url, @QueryMap Map<String, String> map);
 }

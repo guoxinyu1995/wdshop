@@ -63,4 +63,16 @@ public class Apis {
     *根据商品列表归属标签查询商品信息
     * */
    public static final String URL_MORE_GET = "commodity/v1/findCommodityListByLabel?labelId=%s&page=%d&count=%d";
+   /**
+    * 根据用户ID查询用户信息
+    * */
+   public static final String URL_VIEW_USER_INFORMATION="user/verify/v1/getUserById";
+   /**
+    * 修改昵称
+    * */
+   public static final String URL_UPDATE_NAME_PUT = "user/verify/v1/modifyUserNick";
+   /**
+    * 修改用户密码
+    * */
+   public static final String URL_UPDATE_PWD_PUT = "user/verify/v1/modifyUserPwd";
 }
