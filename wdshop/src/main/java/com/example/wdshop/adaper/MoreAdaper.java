@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.wdshop.R;
@@ -49,11 +50,20 @@ public class MoreAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
         ViewHolderMore holderMore = (ViewHolderMore) viewHolder;
         holderMore.morePrice.setText("￥"+mResult.get(i).getPrice());
         holderMore.moreTitle.setText(mResult.get(i).getCommodityName());
         holderMore.moreImage.setImageURI(Uri.parse(mResult.get(i).getMasterPic()));
+        //点击
+        holderMore.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(moreCallBack!=null){
+                    moreCallBack.callBaack(mResult.get(i).getCommodityId());
+                }
+            }
+        });
     }
 
     @Override
@@ -68,9 +78,20 @@ public class MoreAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView moreTitle;
         @BindView(R.id.more_price)
         TextView morePrice;
+        @BindView(R.id.more_relate)
+        RelativeLayout layout;
         public ViewHolderMore(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
+    }
+
+    //定义接口
+    private MoreCallBack moreCallBack;
+    public void setMoreCallBack(MoreCallBack moreCallBack){
+        this.moreCallBack = moreCallBack;
+    }
+    public interface MoreCallBack{
+        void callBaack(int commodityId);
     }
 }

@@ -12,6 +12,7 @@
     android:padding="@dimen/dp_10"
     android:background="@drawable/recycle_item_shape"
     android:elevation="@dimen/dp_4"
+    android:id="@+id/mlss_relate"
     >
 <com.facebook.drawee.view.SimpleDraweeView
     android:id="@+id/mlss_image"

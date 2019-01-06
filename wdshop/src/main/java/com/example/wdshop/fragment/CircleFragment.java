@@ -33,9 +33,6 @@ public class CircleFragment extends BaseFragment implements Iview {
     private CircleAdaper adaper;
     private int mPage;
     private int count = 5;
-    private int userId;
-    private String sessionId;
-
     /**
      * 初始化数据
      */
@@ -43,9 +40,7 @@ public class CircleFragment extends BaseFragment implements Iview {
     protected void initData() {
         Intent intent = getActivity().getIntent();
         LoginBean.ResultBean result = (LoginBean.ResultBean) intent.getSerializableExtra("result");
-        userId = result.getUserId();
-        sessionId = result.getSessionId();
-        presenter.getRequest(String.format(Apis.URL_FIND_CIRCLE_LIST_GET, userId, sessionId, mPage, count), CircleBean.class);
+        presenter.getRequest(String.format(Apis.URL_FIND_CIRCLE_LIST_GET,mPage, count), CircleBean.class);
     }
 
     /**

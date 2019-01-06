@@ -7,6 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wdshop.R;
+import com.example.wdshop.activity.FootPrintActivity;
 import com.example.wdshop.activity.PresonalDataActivity;
 import com.example.wdshop.api.Apis;
 import com.example.wdshop.bean.InformationBean;
@@ -79,6 +80,8 @@ public class MineFragment extends BaseFragment implements Iview {
             case R.id.circle_text:
                 break;
             case R.id.footprint_text:
+                Intent intent_foot = new Intent(getActivity(),FootPrintActivity.class);
+                startActivity(intent_foot);
                 break;
             case R.id.wallet_text:
                 break;

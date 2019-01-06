@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.wdshop.R;
@@ -46,11 +47,20 @@ public class CatagralFindAdaper extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
         ViewHolderCatagralFind catagralFind = (ViewHolderCatagralFind) viewHolder;
         catagralFind.findTitle.setText(mResult.get(i).getCommodityName());
         catagralFind.findPrice.setText("￥:"+mResult.get(i).getPrice());
         catagralFind.findSimple.setImageURI(Uri.parse(mResult.get(i).getMasterPic()));
+
+        catagralFind.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(findCallBack!=null){
+                    findCallBack.callBack(mResult.get(i).getCommodityId());
+                }
+            }
+        });
     }
 
     @Override
@@ -65,9 +75,19 @@ public class CatagralFindAdaper extends RecyclerView.Adapter<RecyclerView.ViewHo
         TextView findTitle;
         @BindView(R.id.find_price)
         TextView findPrice;
+        @BindView(R.id.find_relate_click)
+        RelativeLayout layout;
         public ViewHolderCatagralFind(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
+    }
+    //定义接口
+    private FindCallBack findCallBack;
+    public void setFindCallBack(FindCallBack findCallBack){
+        this.findCallBack = findCallBack;
+    }
+    public interface FindCallBack{
+        void callBack(int commodityId);
     }
 }

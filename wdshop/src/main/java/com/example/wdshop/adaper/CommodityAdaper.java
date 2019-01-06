@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.wdshop.R;
@@ -41,11 +42,20 @@ public class CommodityAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
         ViewHolderRxxp holderRxxp = (ViewHolderRxxp) viewHolder;
         holderRxxp.rxxpPrice.setText("￥"+mRxxp.get(i).getPrice());
         holderRxxp.rxxpTitle.setText(mRxxp.get(i).getCommodityName());
         holderRxxp.rxxpImage.setImageURI(Uri.parse(mRxxp.get(i).getMasterPic()));
+
+        holderRxxp.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(rxxpCallBack!=null){
+                    rxxpCallBack.callBaack(mRxxp.get(i).getCommodityId());
+                }
+            }
+        });
     }
 
     @Override
@@ -60,10 +70,18 @@ public class CommodityAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView rxxpTitle;
         @BindView(R.id.rxxp_price)
         TextView rxxpPrice;
+        @BindView(R.id.rxxp_relate)
+        RelativeLayout layout;
         public ViewHolderRxxp(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
     }
-
-}
+    //定义接口
+    private RxxpCallBack rxxpCallBack;
+    public void setRxxpCallBack(RxxpCallBack rxxpCallBack){
+        this.rxxpCallBack = rxxpCallBack;
+    }
+    public interface RxxpCallBack{
+        void callBaack(int commodityId);
+    }}

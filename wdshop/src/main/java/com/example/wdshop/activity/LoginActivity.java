@@ -139,7 +139,13 @@ public class LoginActivity extends BaseActivity implements Iview {
                 password = editPass.getText().toString().trim();
                 //非空判断
                 if (EmptyUtil.isNull(name, password)) {
-                    getData();
+                     getData();
+                    //正则
+                   /*if(EmptyUtil.isMobileNO(name,password)){
+                        getData();
+                    }else{
+                        Toast.makeText(LoginActivity.this, "手机号和密码不正确", Toast.LENGTH_SHORT).show();
+                    }*/
                 } else {
                     Toast.makeText(LoginActivity.this, "手机号和密码不能为空", Toast.LENGTH_SHORT).show();
                 }
@@ -182,6 +188,7 @@ public class LoginActivity extends BaseActivity implements Iview {
             }
         }
     }
+    @Override
     public void requestFail(Object o) {
         if (o instanceof Exception) {
             Exception e = (Exception) o;

@@ -1,6 +1,7 @@
 package com.example.wdshop.fragment;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.wdshop.R;
+import com.example.wdshop.activity.ParticularsActivity;
 import com.example.wdshop.adaper.CatagralFindAdaper;
 import com.example.wdshop.adaper.CatagralOneAdaper;
 import com.example.wdshop.adaper.CatagralTwoAdaper;
@@ -154,6 +156,13 @@ public class HomeFragment extends BaseFragment implements Iview {
         //创建适配器
         qualityAdaper = new QualityAdaper(getActivity());
         qualityRecycleview.setAdapter(qualityAdaper);
+        //点击跳转详情
+        qualityAdaper.setPzshCallBack(new QualityAdaper.PzshCallBack() {
+            @Override
+            public void callBack(int commodityId) {
+                getJump(commodityId);
+            }
+        });
     }
 
     //魔力时尚
@@ -165,6 +174,13 @@ public class HomeFragment extends BaseFragment implements Iview {
         //创建适配器
         fashionAdaper = new FashionAdaper(getActivity());
         fashionRecycleview.setAdapter(fashionAdaper);
+        //点击跳转详情
+        fashionAdaper.setMlssCallBack(new FashionAdaper.MlssCallBack() {
+            @Override
+            public void callBack(int commodityId) {
+                getJump(commodityId);
+            }
+        });
     }
 
     //热销新品
@@ -176,6 +192,13 @@ public class HomeFragment extends BaseFragment implements Iview {
         //创建适配器
         commodityAdaper = new CommodityAdaper(getActivity());
         hotRecycleview.setAdapter(commodityAdaper);
+        //点击跳转详情
+        commodityAdaper.setRxxpCallBack(new CommodityAdaper.RxxpCallBack() {
+            @Override
+            public void callBaack(int commodityId) {
+                getJump(commodityId);
+            }
+        });
     }
 
     /**
@@ -401,8 +424,21 @@ public class HomeFragment extends BaseFragment implements Iview {
         xRecyclerView.setVisibility(View.VISIBLE);
         moreText.setVisibility(View.VISIBLE);
         moreImage.setVisibility(View.VISIBLE);
+        moreAdaper.setMoreCallBack(new MoreAdaper.MoreCallBack() {
+            @Override
+            public void callBaack(int commodityId) {
+                getJump(commodityId);
+            }
+        });
     }
-
+    /**
+     * 跳转详情
+     * */
+    private void getJump(int commodityId) {
+        Intent intent = new Intent(getActivity(),ParticularsActivity.class);
+        intent.putExtra("commodityId",commodityId);
+        startActivity(intent);
+    }
     /**
      * 加载更多请求数据的方法
      */
@@ -430,6 +466,13 @@ public class HomeFragment extends BaseFragment implements Iview {
         moreImage.setVisibility(View.GONE);
         //展示数据显示
         findRecycle.setVisibility(View.VISIBLE);
+        //点击跳转详情
+        searchAdaper.setSearchCallBack(new SearchAdaper.SearchCallBack() {
+            @Override
+            public void callBaack(int commodityId) {
+                getJump(commodityId);
+            }
+        });
     }
 
     /**
@@ -444,6 +487,13 @@ public class HomeFragment extends BaseFragment implements Iview {
         findAdaper = new CatagralFindAdaper(getActivity());
         //设置适配器
         findRecycle.setAdapter(findAdaper);
+        //点击跳转详情
+        findAdaper.setFindCallBack(new CatagralFindAdaper.FindCallBack() {
+            @Override
+            public void callBack(int commodityId) {
+                getJump(commodityId);
+            }
+        });
     }
 
     /**

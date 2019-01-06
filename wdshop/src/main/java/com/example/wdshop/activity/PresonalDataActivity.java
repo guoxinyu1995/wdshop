@@ -1,12 +1,22 @@
 package com.example.wdshop.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +29,7 @@ import com.example.wdshop.presents.PresenterImpl;
 import com.example.wdshop.view.Iview;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +54,12 @@ public class PresonalDataActivity extends BaseActivity implements Iview {
     TextView myPassword;
     private AlertDialog dialog;
     private PresenterImpl presenter;
-
+    private TextView camera;
+    private TextView pick;
+    private TextView cancel;
+    private PopupWindow window;
+    private String path = Environment.getExternalStorageDirectory()
+            + "/image.png";
     /**
      * 加载视图
      */
@@ -75,6 +91,54 @@ public class PresonalDataActivity extends BaseActivity implements Iview {
     protected void initView(Bundle savedInstanceState) {
         presenter = new PresenterImpl(this);
         ButterKnife.bind(this);
+        //加载视图
+        View view_p = View.inflate(this, R.layout.popupwindow_item, null);
+        camera = view_p.findViewById(R.id.text_camera);
+        pick = view_p.findViewById(R.id.text_pick);
+        cancel = view_p.findViewById(R.id.text_cancel);
+        //创建PopupWindow
+        window = new PopupWindow(view_p, ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        //设置焦点
+        window.setFocusable(true);
+        //设置背景
+        window.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        //设置可触摸
+        window.setTouchable(true);
+        //打开相机
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 调取系统相机
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                // 存到sdcard中
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(new File(path)));
+                //执行
+                startActivityForResult(intent, 100);
+                window.dismiss();
+            }
+        });
+        //打开相册
+        pick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //加载相册
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                //设置图片格式
+                intent.setType("image/*");
+                //执行
+                startActivityForResult(intent, 300);
+                window.dismiss();
+            }
+        });
+        //取消
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                window.dismiss();
+            }
+        });
     }
 
     @OnClick({R.id.my_profile_text, R.id.my_profile_simple, R.id.my_nickname, R.id.my_password})
@@ -83,6 +147,8 @@ public class PresonalDataActivity extends BaseActivity implements Iview {
             case R.id.my_profile_text:
                 break;
             case R.id.my_profile_simple:
+                window.showAtLocation(View.inflate(PresonalDataActivity.this, R.layout.activity_presonal_data, null),
+                        Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.my_nickname:
                 final AlertDialog.Builder builder = new AlertDialog.Builder(PresonalDataActivity.this);
@@ -136,8 +202,8 @@ public class PresonalDataActivity extends BaseActivity implements Iview {
                             Toast.makeText(PresonalDataActivity.this, "输入不能为空", Toast.LENGTH_SHORT).show();
                         } else {
                             Map<String, String> map = new HashMap<>();
-                            map.put("oldPwd",formerPass);
-                            map.put("newPwd",newPass);
+                            map.put("oldPwd", formerPass);
+                            map.put("newPwd", newPass);
                             presenter.putRequest(Apis.URL_UPDATE_PWD_PUT, map, MineUpdatePasswordBean.class);
                             myPassword.setText(newPass);
                         }
@@ -169,10 +235,10 @@ public class PresonalDataActivity extends BaseActivity implements Iview {
         if (o instanceof MineUpdateNameBean) {
             MineUpdateNameBean updateBean = (MineUpdateNameBean) o;
             Toast.makeText(PresonalDataActivity.this, updateBean.getMessage(), Toast.LENGTH_SHORT).show();
-       //修改密码
-        }else if(o instanceof MineUpdatePasswordBean){
+            //修改密码
+        } else if (o instanceof MineUpdatePasswordBean) {
             MineUpdatePasswordBean passwordBean = (MineUpdatePasswordBean) o;
-            Toast.makeText(PresonalDataActivity.this,passwordBean.getMessage(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(PresonalDataActivity.this, passwordBean.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -186,5 +252,52 @@ public class PresonalDataActivity extends BaseActivity implements Iview {
             e.printStackTrace();
         }
         Toast.makeText(PresonalDataActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //相机
+        if(requestCode == 100 && resultCode == RESULT_OK){
+            //调取裁剪功能
+            Intent intent = new Intent("com.android.camera.action.CROP");
+            //将图片设置给裁剪
+            intent.setDataAndType(Uri.fromFile(new File(path)), "image/*");
+            //设置是否支持裁剪
+            intent.putExtra("CROP", true);
+            //设置宽高比
+            intent.putExtra("aspectX", 1);
+            intent.putExtra("aspectY", 1);
+            //设置显示大小
+            intent.putExtra("outputX", 50);
+            intent.putExtra("outputY", 50);
+            //将图片返回给data
+            intent.putExtra("return-data", true);
+            startActivityForResult(intent, 200);
+        }
+        //相册
+        if(requestCode == 300 && resultCode == RESULT_OK){
+            //获取相册路径
+            Uri uri = data.getData();
+            //调取裁剪功能
+            Intent intent = new Intent("com.android.camera.action.CROP");
+            //将图片设置给裁剪
+            intent.setDataAndType(uri, "image/*");
+            //设置是否支持裁剪
+            intent.putExtra("CROP", true);
+            //设置框高比
+            intent.putExtra("aspectX", 1);
+            intent.putExtra("aspectY", 1);
+            //设置显示大小
+            intent.putExtra("outputX", 50);
+            intent.putExtra("outputY", 50);
+            //将图片返回给data
+            intent.putExtra("return-data", true);
+            startActivityForResult(intent, 200);
+        }
+        if(requestCode == 200 && resultCode == RESULT_OK){
+            Bitmap bitmap = data.getParcelableExtra("data");
+            //myProfileSimple.setImageURI();
+        }
     }
 }

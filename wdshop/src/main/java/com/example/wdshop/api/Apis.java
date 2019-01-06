@@ -26,7 +26,7 @@ public class Apis {
     /**
      * 圈子列表 http://172.17.8.100/small/circle/v1/findCircleList
      */
-    public static final String URL_FIND_CIRCLE_LIST_GET="circle/v1/findCircleList?userId=%d&sessionId=%s&page=%d&count=%d";
+    public static final String URL_FIND_CIRCLE_LIST_GET="circle/v1/findCircleList?page=%d&count=%d";
     /**
      *圈子点赞
      * */
@@ -75,4 +75,19 @@ public class Apis {
     * 修改用户密码
     * */
    public static final String URL_UPDATE_PWD_PUT = "user/verify/v1/modifyUserPwd";
+   /**
+    *我的足迹
+    * 接口地址：http://172.17.8.100/small/commodity/verify/v1/browseList
+    * */
+   public static final String URL_BROWSE_LIST_GET="commodity/verify/v1/browseList?page=%d&count=%d";
+   /**
+    * 用户上传头像
+    * 接口地址：http://172.17.8.100/small/user/verify/v1/modifyHeadPic
+    * */
+   public static final String URL_MODIFY_HEANPIC_POST="user/verify/v1/modifyHeadPic";
+   /**
+    * 商品详情
+    * 接口地址：http://172.17.8.100/small/commodity/v1/findCommodityDetailsById
+    * */
+   public static final String URL_FIND_COMMODITY_GET="commodity/v1/findCommodityDetailsById?commodityId=%d";
 }

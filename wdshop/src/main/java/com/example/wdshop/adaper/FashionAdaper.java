@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.wdshop.R;
@@ -41,11 +42,20 @@ public class FashionAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
         ViewHolderMlss holderMlss = (ViewHolderMlss) viewHolder;
         holderMlss.mlssPrice.setText("￥"+mMlss.get(i).getPrice());
         holderMlss.mlssTitle.setText(mMlss.get(i).getCommodityName());
         holderMlss.mlssImage.setImageURI(Uri.parse(mMlss.get(i).getMasterPic()));
+
+        holderMlss.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mlssCallBack!=null){
+                    mlssCallBack.callBack(mMlss.get(i).getCommodityId());
+                }
+            }
+        });
     }
 
     @Override
@@ -60,10 +70,19 @@ public class FashionAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         TextView mlssTitle;
         @BindView(R.id.mlss_price)
         TextView mlssPrice;
+        @BindView(R.id.mlss_relate)
+        RelativeLayout layout;
         public ViewHolderMlss(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
-
+    //定义接口
+    private MlssCallBack mlssCallBack;
+    public void setMlssCallBack(MlssCallBack mlssCallBack){
+        this.mlssCallBack = mlssCallBack;
+    }
+    public interface MlssCallBack{
+        void callBack(int commodityId);
+    }
 }

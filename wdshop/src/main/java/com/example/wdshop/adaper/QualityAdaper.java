@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.wdshop.R;
@@ -43,11 +44,20 @@ public class QualityAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
         ViewHolderPzsh holderPzsh = (ViewHolderPzsh) viewHolder;
         holderPzsh.pzshTitle.setText(mPzsh.get(i).getCommodityName());
         holderPzsh.pzshPrice.setText("￥"+mPzsh.get(i).getPrice());
         holderPzsh.pzshImage.setImageURI(Uri.parse(mPzsh.get(i).getMasterPic()));
+
+        holderPzsh.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(pzshCallBack!=null){
+                    pzshCallBack.callBack(mPzsh.get(i).getCommodityId());
+                }
+            }
+        });
     }
 
     @Override
@@ -62,10 +72,19 @@ public class QualityAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         TextView pzshTitle;
         @BindView(R.id.pash_price)
         TextView pzshPrice;
+        @BindView(R.id.pzsh_relate)
+        RelativeLayout layout;
         public ViewHolderPzsh(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
-
+    //定义接口
+    private PzshCallBack pzshCallBack;
+    public void setPzshCallBack(PzshCallBack pzshCallBack){
+        this.pzshCallBack = pzshCallBack;
+    }
+    public interface PzshCallBack{
+        void callBack(int commodityId);
+    }
 }

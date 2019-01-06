@@ -25,6 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutResId());
         initView(savedInstanceState);
         initData();
+        stateNetWork();
     }
 
     protected abstract int getLayoutResId();
@@ -51,6 +52,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                     Manifest.permission.READ_PHONE_STATE,
                     //网络权限
                     Manifest.permission.INTERNET,
+                    //相机
+                    Manifest.permission.CAMERA,
             };
             ActivityCompat.requestPermissions(this,mStatenetwork,100);
         }

@@ -10,6 +10,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/recycle_item_shape"
         android:padding="@dimen/dp_10"
+        android:id="@+id/pzsh_relate"
         >
 
         <com.facebook.drawee.view.SimpleDraweeView

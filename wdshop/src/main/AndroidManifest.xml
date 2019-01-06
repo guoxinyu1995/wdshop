@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.CAMERA"/>
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
@@ -32,7 +32,8 @@
             android:name=".activity.HomeActivity"
             android:launchMode="singleTask" />
         <activity android:name=".activity.PresonalDataActivity" />
-        <activity android:name=".activity.ParticularsActivity"></activity>
+        <activity android:name=".activity.ParticularsActivity" />
+        <activity android:name=".activity.FootPrintActivity"></activity>
     </application>
 
 </manifest>
