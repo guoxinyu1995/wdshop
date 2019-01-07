@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_5">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/recycle_item_shape"
+        android:padding="@dimen/dp_10"
+        >
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/fp_image"
+            android:layout_width="@dimen/dp_131"
+            android:layout_height="@dimen/dp_102" />
+
+        <TextView
+            android:id="@+id/fp_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fp_image"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_alignLeft="@id/fp_image"
+            android:ellipsize="end"
+            android:textColor="#666"
+            android:text="title"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/fp_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fp_title"
+            android:textColor="#f00"
+            android:layout_alignLeft="@id/fp_image"
+            android:textSize="@dimen/sp_14"
+            android:text="price"
+            />
+        <TextView
+            android:id="@+id/browsenum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fp_title"
+            android:layout_alignRight="@id/fp_image"
+            android:text="浏览次数"
+            android:textSize="@dimen/sp_14"
+            />
+        <TextView
+            android:id="@+id/browsetime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/browsenum"
+            android:layout_alignRight="@id/fp_image"
+            android:textSize="@dimen/sp_14"
+            android:text="时间"
+            />
+
+    </RelativeLayout>
+</RelativeLayout>

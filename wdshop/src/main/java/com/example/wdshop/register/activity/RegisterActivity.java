@@ -1,16 +1,12 @@
-package com.example.wdshop.activity;
+package com.example.wdshop.register.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -18,9 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wdshop.R;
+import com.example.wdshop.activity.BaseActivity;
 import com.example.wdshop.api.Apis;
 
-import com.example.wdshop.bean.RegisterBean;
+import com.example.wdshop.register.bean.RegisterBean;
+import com.example.wdshop.login.activity.LoginActivity;
 import com.example.wdshop.presents.PresenterImpl;
 import com.example.wdshop.util.EmptyUtil;
 import com.example.wdshop.view.Iview;

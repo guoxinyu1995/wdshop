@@ -54,6 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     Manifest.permission.INTERNET,
                     //相机
                     Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_APN_SETTINGS,
             };
             ActivityCompat.requestPermissions(this,mStatenetwork,100);
         }

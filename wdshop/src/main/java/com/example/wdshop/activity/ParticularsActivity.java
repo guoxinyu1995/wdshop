@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wdshop.R;
 import com.example.wdshop.api.Apis;
+import com.example.wdshop.bean.AddCartBean;
 import com.example.wdshop.bean.ParticularsBean;
 import com.example.wdshop.presents.PresenterImpl;
 import com.example.wdshop.view.Iview;
@@ -19,10 +22,13 @@ import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoaderInterface;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 展示详情的Activity
@@ -36,7 +42,12 @@ public class ParticularsActivity extends BaseActivity implements Iview {
     TextView title;
     @BindView(R.id.webview)
     WebView webview;
+    @BindView(R.id.add)
+    ImageView add;
+    @BindView(R.id.buy)
+    ImageView buy;
     private PresenterImpl presenter;
+    private int commodityId;
 
     /**
      * 加载布局
@@ -52,7 +63,7 @@ public class ParticularsActivity extends BaseActivity implements Iview {
     @Override
     protected void initData() {
         Intent intent = getIntent();
-        int commodityId = intent.getIntExtra("commodityId", 0);
+        commodityId = intent.getIntExtra("commodityId", 0);
         presenter.getRequest(String.format(Apis.URL_FIND_COMMODITY_GET, commodityId), ParticularsBean.class);
     }
 
@@ -68,13 +79,13 @@ public class ParticularsActivity extends BaseActivity implements Iview {
 
             @Override
             public void displayImage(Context context, Object path, SimpleDraweeView imageView) {
-                Uri uri=Uri.parse((String) path);
+                Uri uri = Uri.parse((String) path);
                 imageView.setImageURI(uri);
             }
 
             @Override
             public SimpleDraweeView createImageView(Context context) {
-                SimpleDraweeView simpleDraweeView=new SimpleDraweeView(context);
+                SimpleDraweeView simpleDraweeView = new SimpleDraweeView(context);
                 return simpleDraweeView;
             }
         });
@@ -85,22 +96,26 @@ public class ParticularsActivity extends BaseActivity implements Iview {
      */
     @Override
     public void requestData(Object o) {
-        if(o instanceof ParticularsBean){
+        if (o instanceof ParticularsBean) {
             ParticularsBean particularsBean = (ParticularsBean) o;
-            if(particularsBean == null || !particularsBean.isSuccess()){
-                Toast.makeText(ParticularsActivity.this,particularsBean.getMessage(),Toast.LENGTH_SHORT ).show();
-            }else{
+            ParticularsBean.ResultBean result = particularsBean.getResult();
+            if (particularsBean == null || !particularsBean.isSuccess()) {
+                Toast.makeText(ParticularsActivity.this, particularsBean.getMessage(), Toast.LENGTH_SHORT).show();
+            } else {
                 String[] split = particularsBean.getResult().getPicture().split("\\,");
-                List<String> list=new ArrayList<>();
-                for (int i=0;i<split.length;i++){
+                List<String> list = new ArrayList<>();
+                for (int i = 0; i < split.length; i++) {
                     list.add(split[i]);
                 }
                 banner.setImages(list);
                 banner.start();
                 title.setText(particularsBean.getResult().getCategoryName());
-                price.setText("￥"+particularsBean.getResult().getPrice());
+                price.setText("￥" + particularsBean.getResult().getPrice());
                 webview.loadDataWithBaseURL(null, particularsBean.getResult().getDetails(), "text/html", "utf-8", null);
             }
+        }else if(o instanceof AddCartBean){
+            AddCartBean cartBean = (AddCartBean) o;
+            Toast.makeText(ParticularsActivity.this,cartBean.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -116,4 +131,24 @@ public class ParticularsActivity extends BaseActivity implements Iview {
         Toast.makeText(ParticularsActivity.this, "请求错误", Toast.LENGTH_SHORT).show();
     }
 
+    @OnClick({R.id.add, R.id.buy})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.add:
+                getAddCart(commodityId);
+                break;
+            case R.id.buy:
+                break;
+                default:
+                    break;
+        }
+    }
+    /**
+     * 同步购物车
+     * */
+    private void getAddCart(int commodityId) {
+        Map<String,String> map = new HashMap<>();
+        map.put("data","[{\"commodityId\":"+commodityId+",\"count\":3}]");
+        presenter.putRequest(Apis.URL_SHOPPING_CART_PUT,map,AddCartBean.class);
+    }
 }

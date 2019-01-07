@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.example.wdshop.R;
 import com.example.wdshop.activity.FootPrintActivity;
 import com.example.wdshop.activity.PresonalDataActivity;
+import com.example.wdshop.activity.WalletActivity;
 import com.example.wdshop.api.Apis;
 import com.example.wdshop.bean.InformationBean;
 import com.example.wdshop.presents.PresenterImpl;
@@ -84,6 +85,8 @@ public class MineFragment extends BaseFragment implements Iview {
                 startActivity(intent_foot);
                 break;
             case R.id.wallet_text:
+                Intent intent_wallet = new Intent(getActivity(),WalletActivity.class);
+                startActivity(intent_wallet);
                 break;
             case R.id.address_text:
                 break;

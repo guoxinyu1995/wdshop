@@ -1,7 +1,9 @@
-package com.example.wdshop.bean;
+package com.example.wdshop.login.bean;
 
 import java.io.Serializable;
-
+/**
+ * 登录bean类
+ * */
 public class LoginBean implements Serializable {
 
 

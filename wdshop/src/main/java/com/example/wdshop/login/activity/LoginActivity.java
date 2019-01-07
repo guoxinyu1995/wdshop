@@ -1,4 +1,4 @@
-package com.example.wdshop.activity;
+package com.example.wdshop.login.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,8 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wdshop.R;
+import com.example.wdshop.activity.BaseActivity;
+import com.example.wdshop.activity.HomeActivity;
+import com.example.wdshop.register.activity.RegisterActivity;
 import com.example.wdshop.api.Apis;
-import com.example.wdshop.bean.LoginBean;
+import com.example.wdshop.login.bean.LoginBean;
 import com.example.wdshop.presents.PresenterImpl;
 import com.example.wdshop.util.EmptyUtil;
 import com.example.wdshop.view.Iview;

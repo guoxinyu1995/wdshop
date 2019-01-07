@@ -1,6 +1,7 @@
 package com.example.wdshop.bean;
 
-public class RegisterBean {
+public class AddCartBean {
+
     private String message;
     private String status;
     private final String SUCCESS_STATUS="0000";

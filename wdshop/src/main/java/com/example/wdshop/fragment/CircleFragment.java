@@ -12,7 +12,7 @@ import com.example.wdshop.api.Apis;
 import com.example.wdshop.bean.CircleCanclePraiseBean;
 import com.example.wdshop.bean.CircleGivePraiseBean;
 import com.example.wdshop.bean.CircleBean;
-import com.example.wdshop.bean.LoginBean;
+import com.example.wdshop.login.bean.LoginBean;
 import com.example.wdshop.presents.PresenterImpl;
 import com.example.wdshop.view.Iview;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
