@@ -13,7 +13,9 @@ import android.widget.Toast;
 import com.example.wdshop.R;
 import com.example.wdshop.api.Apis;
 import com.example.wdshop.bean.AddCartBean;
+import com.example.wdshop.bean.FindShoppingCartBean;
 import com.example.wdshop.bean.ParticularsBean;
+import com.example.wdshop.bean.ShoppCartBean;
 import com.example.wdshop.presents.PresenterImpl;
 import com.example.wdshop.view.Iview;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -96,6 +98,7 @@ public class ParticularsActivity extends BaseActivity implements Iview {
      */
     @Override
     public void requestData(Object o) {
+        //展示详情
         if (o instanceof ParticularsBean) {
             ParticularsBean particularsBean = (ParticularsBean) o;
             ParticularsBean.ResultBean result = particularsBean.getResult();
@@ -113,6 +116,24 @@ public class ParticularsActivity extends BaseActivity implements Iview {
                 price.setText("￥" + particularsBean.getResult().getPrice());
                 webview.loadDataWithBaseURL(null, particularsBean.getResult().getDetails(), "text/html", "utf-8", null);
             }
+            //先查询购物车，在添加到购物车
+        }else if(o instanceof FindShoppingCartBean){
+            FindShoppingCartBean findCartBean = (FindShoppingCartBean) o;
+            if(findCartBean==null || !findCartBean.isSuccess()){
+                Toast.makeText(ParticularsActivity.this,findCartBean.getMessage(),Toast.LENGTH_SHORT).show();
+            }else{
+                //实例化ShoppCartBean
+                List<ShoppCartBean> list = new ArrayList<>();
+                //得到查询购物车的集合
+                List<FindShoppingCartBean.ResultBean> result = findCartBean.getResult();
+                //遍历集合添加到ShoppCartBean集合中
+                for(FindShoppingCartBean.ResultBean re:result){
+                    list.add(new ShoppCartBean(re.getCommodityId(),re.getCount()));
+                }
+                //添加购物车的方法
+                getAddCart(list);
+            }
+            //添加购物车
         }else if(o instanceof AddCartBean){
             AddCartBean cartBean = (AddCartBean) o;
             Toast.makeText(ParticularsActivity.this,cartBean.getMessage(),Toast.LENGTH_SHORT).show();
@@ -134,10 +155,14 @@ public class ParticularsActivity extends BaseActivity implements Iview {
     @OnClick({R.id.add, R.id.buy})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            //加入购物车
             case R.id.add:
-                getAddCart(commodityId);
+                //点击是先查询购物车，判断购物车中是否有相同的商品如果有数量加一，
+                // 如果没有相同的商品将商品加入购物车
+                presenter.getRequest(Apis.URL_FIND_CART_GET,FindShoppingCartBean.class);
                 break;
             case R.id.buy:
+                Toast.makeText(ParticularsActivity.this,"敬请期待",Toast.LENGTH_SHORT).show();
                 break;
                 default:
                     break;
@@ -146,9 +171,27 @@ public class ParticularsActivity extends BaseActivity implements Iview {
     /**
      * 同步购物车
      * */
-    private void getAddCart(int commodityId) {
+    private void getAddCart(List<ShoppCartBean> list) {
+        String str="[";
+        for (int i=0;i<list.size();i++){
+            if(Integer.valueOf(commodityId)==list.get(i).getCommodityId()){
+                int count = list.get(i).getCount();
+                count++;
+                list.get(i).setCount(count);
+                break;
+            }else if(i==list.size()-1){
+                list.add(new ShoppCartBean(Integer.valueOf(commodityId),1));
+                break;
+            }
+        }
+        for (ShoppCartBean resultBean:list){
+            str+="{\"commodityId\":"+resultBean.getCommodityId()+",\"count\":"+resultBean.getCount()+"},";
+        }
+        String substring = str.substring(0, str.length() - 1);
+        substring+="]";
         Map<String,String> map = new HashMap<>();
-        map.put("data","[{\"commodityId\":"+commodityId+",\"count\":3}]");
+        map.put("data",substring);
+        //map.put("data","[{\"commodityId\":"+commodityId+",\"count\":1}]");
         presenter.putRequest(Apis.URL_SHOPPING_CART_PUT,map,AddCartBean.class);
     }
 }

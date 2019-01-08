@@ -108,4 +108,10 @@ public class Apis {
      * 请求方式:GET
      * */
     public static final String URL_FIND_WALLET_GET="user/verify/v1/findUserWallet?page=%d&count=%d";
+    /**
+     * 收货地址列表
+     * 接口地址：http://172.17.8.100/small/user/verify/v1/receiveAddressList
+     * 请求方式:GET
+     * */
+    public static final String URL_RECEIVE_ADDRESS_LIST_GET="user/verify/v1/receiveAddressList";
 }

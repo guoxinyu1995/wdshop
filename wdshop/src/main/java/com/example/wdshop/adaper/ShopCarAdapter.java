@@ -7,7 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -37,6 +39,11 @@ public class ShopCarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
         notifyDataSetChanged();
     }
+
+    public void setDel(int position){
+        mResult.remove(position);
+        notifyItemRemoved(position);
+    }
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -46,11 +53,34 @@ public class ShopCarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
         ViewHolderCart holderCart = (ViewHolderCart) viewHolder;
         holderCart.cartImage.setImageURI(Uri.parse(mResult.get(i).getPic()));
         holderCart.cartPrice.setText("￥"+mResult.get(i).getPrice());
         holderCart.cartTitle.setText(mResult.get(i).getCommodityName());
+        holderCart.viewNum.setData(this,mResult,i);
+        holderCart.cartRadio.setChecked(mResult.get(i).isChecked());
+        holderCart.cartRadio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    mResult.get(i).setChecked(true);
+                }else{
+                    mResult.get(i).setChecked(false);
+                }
+                if(callBackList!=null){
+                    callBackList.callBack(mResult);
+                }
+            }
+        });
+        holderCart.buttonDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(callBackCart!=null){
+                    callBackCart.callBack(i);
+                }
+            }
+        });
     }
 
     @Override
@@ -60,7 +90,7 @@ public class ShopCarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     class ViewHolderCart extends RecyclerView.ViewHolder {
         @BindView(R.id.cart_radio)
-        RadioButton cartRadio;
+        CheckBox cartRadio;
         @BindView(R.id.cart_image)
         SimpleDraweeView cartImage;
         @BindView(R.id.cart_title)
@@ -71,9 +101,28 @@ public class ShopCarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         CustomViewNum viewNum;
         @BindView(R.id.cart_relative)
         RelativeLayout cartRelative;
+        @BindView(R.id.shop_car_del)
+        Button buttonDel;
         public ViewHolderCart(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
+    }
+    //定义接口
+    private CallBackCart callBackCart;
+    public void setCallBackCart(CallBackCart callBackCart){
+        this.callBackCart = callBackCart;
+    }
+    public interface CallBackCart{
+        void callBack(int position);
+    }
+
+
+    private CallBackList callBackList;
+    public void setCallBackList(CallBackList callBackList){
+        this.callBackList = callBackList;
+    }
+    public interface CallBackList{
+        void callBack(List<FindShoppingCartBean.ResultBean> mResult);
     }
 }

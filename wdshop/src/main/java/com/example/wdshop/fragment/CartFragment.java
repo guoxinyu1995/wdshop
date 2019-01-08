@@ -20,6 +20,8 @@ import com.example.wdshop.bean.FindShoppingCartBean;
 import com.example.wdshop.presents.PresenterImpl;
 import com.example.wdshop.view.Iview;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -42,6 +44,7 @@ public class CartFragment extends BaseFragment implements Iview {
     Unbinder unbinder;
     private PresenterImpl presenter;
     private ShopCarAdapter carAdapter;
+    private List<FindShoppingCartBean.ResultBean> result;
 
     /**
      * 初始化数据
@@ -65,6 +68,33 @@ public class CartFragment extends BaseFragment implements Iview {
         // 创建适配器
         carAdapter = new ShopCarAdapter(getActivity());
         cartRecyycle.setAdapter(carAdapter);
+        carAdapter.setCallBackCart(new ShopCarAdapter.CallBackCart() {
+            @Override
+            public void callBack(int position) {
+                carAdapter.setDel(position);
+            }
+        });
+
+        carAdapter.setCallBackList(new ShopCarAdapter.CallBackList() {
+            @Override
+            public void callBack(List<FindShoppingCartBean.ResultBean> mResult) {
+                double totalPrice = 0;
+                int num = 0;
+                for(int i = 0;i<mResult.size();i++){
+                    //获取选中状态
+                    if(mResult.get(i).isChecked()){
+                        totalPrice=totalPrice+(mResult.get(i).getCount()*mResult.get(i).getPrice());
+                        num++;
+                    }
+                }
+                if(num<mResult.size()){
+                    query.setChecked(false);
+                }else{
+                    query.setChecked(true);
+                }
+                total.setText("￥"+totalPrice);
+            }
+        });
     }
 
     /**
@@ -79,6 +109,7 @@ public class CartFragment extends BaseFragment implements Iview {
     public void requestData(Object o) {
         if(o instanceof FindShoppingCartBean){
             FindShoppingCartBean cartBean = (FindShoppingCartBean) o;
+            result = cartBean.getResult();
             if(cartBean==null || !cartBean.isSuccess()){
                 Toast.makeText(getActivity(),cartBean.getMessage(),Toast.LENGTH_SHORT).show();
             }else{
@@ -109,9 +140,24 @@ public class CartFragment extends BaseFragment implements Iview {
             case R.id.btn_close:
                 break;
             case R.id.query:
+                getCheck(query.isChecked());
+                carAdapter.notifyDataSetChanged();
                 break;
                 default:
                     break;
+        }
+    }
+
+    private void getCheck(boolean checked) {
+        double totalPrice = 0;
+        for(int i = 0;i<result.size();i++){
+            result.get(i).setChecked(checked);
+            totalPrice = totalPrice+(result.get(i).getCount()*result.get(i).getPrice());
+        }
+        if(checked){
+            total.setText("￥"+totalPrice);
+        }else{
+            total.setText("￥0.00");
         }
     }
 }

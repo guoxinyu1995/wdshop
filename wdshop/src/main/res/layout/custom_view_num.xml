@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="horizontal">
 
-    <TextView
+    <ImageView
         android:id="@+id/cart_cut"
-        android:layout_width="@dimen/dp_18"
-        android:layout_height="@dimen/dp_18"
-        android:textColor="#666"
-        android:text="－"
-        android:textSize="@dimen/sp_12"
-        android:gravity="center"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
         android:layout_gravity="center_vertical"
-        />
-    <TextView
+        android:background="@drawable/ic_remove_name"
+        android:gravity="center"
+        android:textColor="#666"
+        android:textSize="@dimen/sp_12" />
+
+    <EditText
         android:id="@+id/cart_num"
-        android:layout_width="@dimen/dp_31"
-        android:layout_height="@dimen/dp_18"
-        android:textSize="@dimen/sp_12"
-        android:textColor="#666"
-        android:gravity="center"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_25"
         android:background="#dddd"
-        />
-    <TextView
-        android:id="@+id/cart_add"
-        android:layout_width="@dimen/dp_18"
-        android:layout_height="@dimen/dp_18"
         android:gravity="center"
-        android:layout_gravity="center_vertical"
-        android:text="＋"
-        android:textSize="@dimen/sp_12"
         android:textColor="#666"
-        />
+        android:textSize="@dimen/sp_12" />
+
+    <ImageView
+        android:id="@+id/cart_add"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/ic_add_name"
+        android:gravity="center"
+        android:textColor="#666"
+        android:textSize="@dimen/sp_12" />
 </LinearLayout>

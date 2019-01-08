@@ -37,6 +37,7 @@
         <activity android:name=".activity.ParticularsActivity" />
         <activity android:name=".activity.FootPrintActivity" />
         <activity android:name=".activity.WalletActivity"></activity>
+        <activity android:name=".activity.AddressActivity"/>
     </application>
 
 </manifest>

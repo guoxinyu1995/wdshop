@@ -85,7 +85,7 @@ public class WalletActivity extends BaseActivity implements Iview {
                 Toast.makeText(WalletActivity.this,walletBean.getMessage(),Toast.LENGTH_SHORT).show();
             }else{
                 money.setText(result.getBalance()+"");
-                //walletAdaper.setmBean(walletBean.getResult().getDetailList());
+                walletAdaper.setmBean(walletBean.getResult().getDetailList());
             }
         }
     }
