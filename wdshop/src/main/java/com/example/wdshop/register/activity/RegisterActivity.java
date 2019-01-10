@@ -66,6 +66,9 @@ public class RegisterActivity extends BaseActivity implements Iview {
     protected void initView(Bundle savedInstanceState) {
         presenter = new PresenterImpl(this);
         ButterKnife.bind(this);
+        editPhone.setSelection(editPhone.getText().length());
+        editPass.setSelection(editPass.getText().length());
+        editVerification.setSelection(editVerification.getText().length());
         //密码显示和隐藏
         imageEye.setOnTouchListener(new View.OnTouchListener() {
             @Override

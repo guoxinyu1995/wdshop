@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.FootPrintActivity">
+    tools:context=".mine.activity.FootPrintActivity">
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/foot_xrecycle"
         android:layout_width="@dimen/dp_0"

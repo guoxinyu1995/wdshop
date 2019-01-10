@@ -1,14 +1,20 @@
 package com.example.wdshop.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
+/**
+ * 基类的Activity
+ * */
 public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +61,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                     //相机
                     Manifest.permission.CAMERA,
                     Manifest.permission.WRITE_APN_SETTINGS,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
             };
             ActivityCompat.requestPermissions(this,mStatenetwork,100);
         }
@@ -72,4 +80,20 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }
     }
+    /**
+     * 点击空白区域隐藏键盘.
+     */
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (BaseActivity.this.getCurrentFocus() != null) {
+                if (BaseActivity.this.getCurrentFocus().getWindowToken() != null) {
+                    imm.hideSoftInputFromWindow(BaseActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+            }
+        }
+        return super.onTouchEvent(event);
+    }
+
 }

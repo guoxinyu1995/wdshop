@@ -2,17 +2,22 @@ package com.example.wdshop.network;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.text.TextUtils;
 
 import com.example.wdshop.application.MyApplication;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -39,7 +44,7 @@ public class RetrofitManager<E> {
         return instance;
     }
     //无参构造
-    public RetrofitManager() {
+    private RetrofitManager() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.readTimeout(10, TimeUnit.SECONDS);
         builder.writeTimeout(10, TimeUnit.SECONDS);
@@ -191,6 +196,16 @@ public class RetrofitManager<E> {
                 //设置rxjava
                 .subscribe(getObserver(listener));
 
+    }
+
+    /**
+     *上传头像
+     * */
+    public void imagePost(String url, MultipartBody.Part image,HttpListener listener){
+        baseApis.imagePost(url,image)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(getObserver(listener));
     }
     //定义接口
     public interface HttpListener {

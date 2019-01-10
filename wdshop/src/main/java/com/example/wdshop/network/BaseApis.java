@@ -1,6 +1,7 @@
 package com.example.wdshop.network;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.DELETE;
@@ -9,6 +10,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
@@ -33,4 +35,8 @@ public interface BaseApis<E> {
 
     @PUT
     Observable<ResponseBody> put(@Url String url, @QueryMap Map<String, String> map);
+
+    @Multipart
+    @POST
+    Observable<ResponseBody> imagePost(@Url String url, @Part MultipartBody.Part image);
 }

@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 
 import java.util.Map;
 
+import okhttp3.MultipartBody;
+
 public class ModelImpl implements Imodel {
     private MyCallBack myCallBack;
     /**
@@ -121,6 +123,23 @@ public class ModelImpl implements Imodel {
                 if(myCallBack!=null){
                     myCallBack.onFail(error);
                 }
+            }
+        });
+    }
+    /**
+     * 上传头像
+     * */
+    @Override
+    public void requestImagePost(String url, MultipartBody.Part image, Class clazz, MyCallBack myCallBack) {
+        RetrofitManager.getInstance().imagePost(url, image, new RetrofitManager.HttpListener() {
+            @Override
+            public void onSuccess(String data) {
+
+            }
+
+            @Override
+            public void onFail(String error) {
+
             }
         });
     }

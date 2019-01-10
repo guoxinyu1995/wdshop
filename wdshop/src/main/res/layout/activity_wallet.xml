@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.WalletActivity">
+    tools:context=".mine.activity.WalletActivity">
     <ImageView
         android:id="@+id/wallet_back"
         android:layout_width="@dimen/dp_312"

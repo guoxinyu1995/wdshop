@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.example.wdshop.R;
 import com.example.wdshop.activity.BaseActivity;
-import com.example.wdshop.activity.HomeActivity;
+import com.example.wdshop.home.activity.HomeActivity;
 import com.example.wdshop.register.activity.RegisterActivity;
 import com.example.wdshop.api.Apis;
 import com.example.wdshop.login.bean.LoginBean;
@@ -86,6 +86,8 @@ public class LoginActivity extends BaseActivity implements Iview {
         ButterKnife.bind(this);
         //初始化SharedPreferences
         initSharedPreferences();
+        editPhone.setSelection(editPhone.getText().length());
+        editPass.setSelection(editPass.getText().length());
         //将记住密码的状态值取出
         boolean r_check = sp.getBoolean("r_check", false);
         if (r_check) {

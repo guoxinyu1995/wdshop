@@ -114,4 +114,28 @@ public class Apis {
      * 请求方式:GET
      * */
     public static final String URL_RECEIVE_ADDRESS_LIST_GET="user/verify/v1/receiveAddressList";
+    /**
+     * 新增收货地址
+     * 接口地址：http://172.17.8.100/small/user/verify/v1/addReceiveAddress
+     * 请求方式:POST
+     * */
+    public static final String URL_ADD_RECEIVER_ADDRESS_POST="user/verify/v1/addReceiveAddress";
+    /**
+     * 修改收货信息
+     * 接口地址：http://172.17.8.100/small/user/verify/v1/changeReceiveAddress
+     * 请求方式:PUT
+     * */
+    public static final String URL_CHANGE_ADDRESS_PUT = "user/verify/v1/changeReceiveAddress";
+    /**
+     *设置默认收货地址
+     * 接口地址：http://172.17.8.100/small/user/verify/v1/setDefaultReceiveAddress
+     * 请求方式:POST
+     * */
+    public static final String URL_DEFAULT_RECEIVE_ADDRESS = "user/verify/v1/setDefaultReceiveAddress";
+    /**
+     * 创建订单
+     * 接口地址：http://172.17.8.100/small/order/verify/v1/createOrder
+     * 请求方式:POST
+     * */
+    public static final String URL_CREATE_ORDER = "order/verify/v1/createOrder";
 }

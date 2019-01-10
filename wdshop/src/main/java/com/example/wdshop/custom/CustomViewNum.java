@@ -1,7 +1,6 @@
 package com.example.wdshop.custom;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,14 +12,15 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.wdshop.R;
-import com.example.wdshop.adaper.ShopCarAdapter;
-import com.example.wdshop.bean.FindShoppingCartBean;
-import com.example.wdshop.util.EditTextUtils;
-
+import com.example.wdshop.shoppingcart.adaper.CloseShoppAdaaper;
+import com.example.wdshop.shoppingcart.adaper.ShopCarAdapter;
+import com.example.wdshop.shoppingcart.bean.FindShoppingCartBean;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * 自定义加减器view
+ * */
 public class CustomViewNum extends LinearLayout {
 
     private ImageView add;
@@ -28,6 +28,7 @@ public class CustomViewNum extends LinearLayout {
     private EditText editText;
     private int num;
     private ShopCarAdapter shopCarAdapter;
+    private CloseShoppAdaaper closeShoppAdaaper;
     private List<FindShoppingCartBean.ResultBean> list = new ArrayList<>();
     private int position;
 
@@ -82,7 +83,12 @@ public class CustomViewNum extends LinearLayout {
                 if(callBackListener!=null){
                     callBackListener.callback();
                 }
-                shopCarAdapter.notifyItemChanged(position);
+                if(shopCarAdapter!=null && closeShoppAdaaper==null){
+                    shopCarAdapter.notifyItemChanged(position);
+                }else if(shopCarAdapter==null && closeShoppAdaaper!=null){
+                    closeShoppAdaaper.notifyDataSetChanged();
+                }
+
             }
         });
         //点击减号
@@ -99,13 +105,23 @@ public class CustomViewNum extends LinearLayout {
                 if(callBackListener!=null){
                     callBackListener.callback();
                 }
-                shopCarAdapter.notifyItemChanged(position);
+                if(shopCarAdapter!=null && closeShoppAdaaper==null){
+                    shopCarAdapter.notifyItemChanged(position);
+                }else if(shopCarAdapter==null && closeShoppAdaaper!=null){
+                    closeShoppAdaaper.notifyDataSetChanged();
+                }
             }
         });
     }
-    public void setData(ShopCarAdapter shopCarAdapter, List<FindShoppingCartBean.ResultBean> list, int i){
+    public void setData(Object o, List<FindShoppingCartBean.ResultBean> list, int i){
         this.list=list;
-        this.shopCarAdapter=shopCarAdapter;
+        if(o instanceof ShopCarAdapter){
+            ShopCarAdapter shopCarAdapter = (ShopCarAdapter) o;
+            this.shopCarAdapter=shopCarAdapter;
+        }else if(o instanceof CloseShoppAdaaper){
+            CloseShoppAdaaper closeShoppAdaaper = (CloseShoppAdaaper) o;
+            this.closeShoppAdaaper = closeShoppAdaaper;
+        }
         position = i;
         num = list.get(i).getCount();
         editText.setText(num + "");

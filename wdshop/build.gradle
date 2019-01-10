@@ -68,4 +68,6 @@ dependencies {
     implementation 'com.youth.banner:banner:1.4.9'
     /*滑动删除*/
     implementation "com.daimajia.swipelayout:library:1.2.0@aar"
+    //三级联动
+    implementation 'liji.library.dev:citypickerview:0.7.0'
 }
