@@ -241,6 +241,7 @@ public class CloseActivity extends BaseActivity implements Iview {
                 map.put("totalPrice",String.valueOf(totalPrice1));
                 map.put("addressId",String.valueOf(id));
                 presenter.postRequest(Apis.URL_CREATE_ORDER,map,CreateOrderBean.class);
+                finish();
                 break;
             default:
                 break;

@@ -43,6 +43,7 @@
         <activity android:name=".mine.activity.NewAddressActivity"/>
         <activity android:name=".mine.activity.UpdateAddressActivity"/>
         <activity android:name=".shoppingcart.activity.CloseActivity"/>
+        <activity android:name=".order.activity.PayMentActivity"/>
     </application>
 
 </manifest>

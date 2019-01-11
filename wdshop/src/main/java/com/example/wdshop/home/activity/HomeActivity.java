@@ -87,7 +87,6 @@ public class HomeActivity extends BaseActivity {
                 return list.size();
             }
         });
-        //viewpage.setOffscreenPageLimit(5);
         //点击切换
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

@@ -138,4 +138,28 @@ public class Apis {
      * 请求方式:POST
      * */
     public static final String URL_CREATE_ORDER = "order/verify/v1/createOrder";
+    /**
+     * 根据订单状态查询订单信息
+     * 接口地址：http://172.17.8.100/small/order/verify/v1/findOrderListByStatus
+     * 请求方式:GET
+     * */
+    public static final String URL_FIND_ORDER_LIST_BY_STATUS_GET = "order/verify/v1/findOrderListByStatus?status=%d&page=%d&count=%d";
+    /**
+     *   删除订单
+     * 接口地址：http://172.17.8.100/small/order/verify/v1/deleteOrder
+     * 请求方式:DELETE
+     * */
+    public static final String URL_DELETE_ORDER_DELETE = "order/verify/v1/deleteOrder?orderId=%s";
+    /**
+     * 支付
+     * 接口地址：http://172.17.8.100/small/order/verify/v1/pay
+     * 请求方式:POST
+     * */
+    public static final String URL_PAY_POST = "order/verify/v1/pay";
+    /**
+     *  收货
+     * 接口地址：http://172.17.8.100/small/order/verify/v1/confirmReceipt
+     * 请求方式:PUT
+     * */
+    public static final String URL_CONFIRM_RECEIPT_PUT = "order/verify/v1/confirmReceipt";
 }
