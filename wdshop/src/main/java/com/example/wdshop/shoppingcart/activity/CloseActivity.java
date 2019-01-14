@@ -247,4 +247,10 @@ public class CloseActivity extends BaseActivity implements Iview {
                 break;
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDetach();
+    }
 }

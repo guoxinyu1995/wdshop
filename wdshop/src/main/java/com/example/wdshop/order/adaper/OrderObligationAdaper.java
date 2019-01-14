@@ -54,32 +54,32 @@ public class OrderObligationAdaper extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.order_obligation_fragment_item, viewGroup, false);
-        ViewHolderAll holderAll = new ViewHolderAll(view);
-        return holderAll;
+        ViewHolderObligation holderObligation = new ViewHolderObligation(view);
+        return holderObligation;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
-        ViewHolderAll holderAll = (ViewHolderAll) viewHolder;
-        holderAll.mark.setText(mOrder.get(i).getOrderId());
+        ViewHolderObligation holderObligation = (ViewHolderObligation) viewHolder;
+        holderObligation.mark.setText(mOrder.get(i).getOrderId());
         //设置时间类型
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(
                 new java.util.Date(mOrder.get(i).getOrderTime()));
-        holderAll.time.setText(date);
+        holderObligation.time.setText(date);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
-        holderAll.recycleTitle.setLayoutManager(layoutManager);
+        holderObligation.recycleTitle.setLayoutManager(layoutManager);
         OrderAllItemAdaper allItemAdaper = new OrderAllItemAdaper(mContext);
-        holderAll.recycleTitle.setAdapter(allItemAdaper);
+        holderObligation.recycleTitle.setAdapter(allItemAdaper);
         allItemAdaper.setmData(mOrder.get(i).getDetailList());
         int num = 0;
         List<OrderBean.OrderListBean.DetailListBean> detailList = mOrder.get(i).getDetailList();
         for(OrderBean.OrderListBean.DetailListBean list:detailList){
                 num += list.getCommodityCount();
         }
-        holderAll.numPrice.setText("共"+num+"件商品，需付款"+mOrder.get(i).getPayAmount());
+        holderObligation.numPrice.setText("共"+num+"件商品，需付款"+mOrder.get(i).getPayAmount());
         //删除订单
-        holderAll.cancelButton.setOnClickListener(new View.OnClickListener() {
+        holderObligation.cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(callBackObligation!=null){
@@ -88,7 +88,7 @@ public class OrderObligationAdaper extends RecyclerView.Adapter<RecyclerView.Vie
             }
         });
         //去支付
-        holderAll.paymentButton.setOnClickListener(new View.OnClickListener() {
+        holderObligation.paymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(callBackPay!=null){
@@ -103,7 +103,7 @@ public class OrderObligationAdaper extends RecyclerView.Adapter<RecyclerView.Vie
         return mOrder.size();
     }
 
-    class ViewHolderAll extends RecyclerView.ViewHolder {
+    class ViewHolderObligation extends RecyclerView.ViewHolder {
         @BindView(R.id.dingdan)
         TextView dingdan;
         @BindView(R.id.mark)
@@ -121,7 +121,7 @@ public class OrderObligationAdaper extends RecyclerView.Adapter<RecyclerView.Vie
         @BindView(R.id.order_constr)
         ConstraintLayout orderConstr;
 
-        public ViewHolderAll(@NonNull View itemView) {
+        public ViewHolderObligation(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

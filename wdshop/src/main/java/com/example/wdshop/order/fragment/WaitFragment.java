@@ -132,8 +132,8 @@ public class WaitFragment extends BaseFragment implements Iview {
 
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onDestroy() {
+        super.onDestroy();
         unbinder.unbind();
         presenter.onDetach();
     }

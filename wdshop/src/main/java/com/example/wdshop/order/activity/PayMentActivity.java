@@ -177,4 +177,10 @@ public class PayMentActivity extends BaseActivity implements Iview {
                 map.put("payType",String.valueOf(type));
                 presenter.postRequest(Apis.URL_PAY_POST,map,PayOrderBean.class);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDetach();
+    }
 }

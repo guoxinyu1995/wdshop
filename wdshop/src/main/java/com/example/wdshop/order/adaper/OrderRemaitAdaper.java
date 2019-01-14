@@ -46,7 +46,11 @@ public class OrderRemaitAdaper extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
         notifyDataSetChanged();
     }
-
+    //删除
+    public void setDel(int position){
+        mOrder.remove(position);
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -56,7 +60,7 @@ public class OrderRemaitAdaper extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
         ViewHolderRemait holderRemait = (ViewHolderRemait) viewHolder;
         holderRemait.mark.setText(mOrder.get(i).getOrderId());
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
@@ -65,6 +69,14 @@ public class OrderRemaitAdaper extends RecyclerView.Adapter<RecyclerView.ViewHol
         OrderRemaitItemAdaper remaitItemAdaper = new OrderRemaitItemAdaper(mContext);
         holderRemait.recycleTitle.setAdapter(remaitItemAdaper);
         remaitItemAdaper.setmData(mOrder.get(i).getDetailList());
+        holderRemait.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(callBackDel!=null){
+                    callBackDel.callBack(mOrder.get(i).getOrderId(),i);
+                }
+            }
+        });
     }
 
     @Override
@@ -87,5 +99,13 @@ public class OrderRemaitAdaper extends RecyclerView.Adapter<RecyclerView.ViewHol
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
+    }
+    /**定义接口删除订单*/
+    private CallBackDel callBackDel;
+    public void setCallBackDel(CallBackDel callBackDel){
+        this.callBackDel = callBackDel;
+    }
+    public interface CallBackDel{
+        void callBack(String orderId,int position);
     }
 }

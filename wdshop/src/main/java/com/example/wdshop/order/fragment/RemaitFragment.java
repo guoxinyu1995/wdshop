@@ -1,24 +1,17 @@
 package com.example.wdshop.order.fragment;
-
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.Toast;
-
 import com.example.wdshop.R;
 import com.example.wdshop.api.Apis;
 import com.example.wdshop.fragment.BaseFragment;
 import com.example.wdshop.order.adaper.OrderRemaitAdaper;
-import com.example.wdshop.order.adaper.OrderWaitAdaper;
+import com.example.wdshop.order.bean.DeleteOrderBean;
 import com.example.wdshop.order.bean.OrderBean;
 import com.example.wdshop.presents.PresenterImpl;
 import com.example.wdshop.view.Iview;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -72,6 +65,14 @@ public class RemaitFragment extends BaseFragment implements Iview {
                 initData();
             }
         });
+        //删除
+        remaitAdaper.setCallBackDel(new OrderRemaitAdaper.CallBackDel() {
+            @Override
+            public void callBack(String orderId, int position) {
+                remaitAdaper.setDel(position);
+                presenter.deleteRequest(String.format(Apis.URL_DELETE_ORDER_DELETE,orderId),DeleteOrderBean.class);
+            }
+        });
     }
 
     /**
@@ -119,5 +120,6 @@ public class RemaitFragment extends BaseFragment implements Iview {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        presenter.onDetach();
     }
 }

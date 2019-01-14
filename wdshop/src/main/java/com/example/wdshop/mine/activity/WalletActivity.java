@@ -1,6 +1,7 @@
 package com.example.wdshop.mine.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -69,6 +70,8 @@ public class WalletActivity extends BaseActivity implements Iview {
         //创建布局管理器
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
+        DividerItemDecoration decoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
+        walletRecycle.addItemDecoration(decoration);
         walletRecycle.setLayoutManager(layoutManager);
         //创建适配器
         walletAdaper = new WalletAdaper(this);
@@ -104,5 +107,9 @@ public class WalletActivity extends BaseActivity implements Iview {
         Toast.makeText(WalletActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDetach();
+    }
 }

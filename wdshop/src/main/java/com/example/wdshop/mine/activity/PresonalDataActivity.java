@@ -317,4 +317,10 @@ public class PresonalDataActivity extends BaseActivity implements Iview {
             //myProfileSimple.setImageURI();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDetach();
+    }
 }

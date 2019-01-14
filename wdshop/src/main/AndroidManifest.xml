@@ -44,6 +44,7 @@
         <activity android:name=".mine.activity.UpdateAddressActivity"/>
         <activity android:name=".shoppingcart.activity.CloseActivity"/>
         <activity android:name=".order.activity.PayMentActivity"/>
+        <activity android:name=".shoppingcart.activity.DepailActivity"/>
     </application>
 
 </manifest>

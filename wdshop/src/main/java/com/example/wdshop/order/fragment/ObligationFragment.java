@@ -1,29 +1,21 @@
 package com.example.wdshop.order.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.wdshop.R;
 import com.example.wdshop.api.Apis;
 import com.example.wdshop.fragment.BaseFragment;
 import com.example.wdshop.order.activity.PayMentActivity;
-import com.example.wdshop.order.adaper.OrderAllAdaper;
 import com.example.wdshop.order.adaper.OrderObligationAdaper;
 import com.example.wdshop.order.bean.DeleteOrderBean;
 import com.example.wdshop.order.bean.OrderBean;
-import com.example.wdshop.order.bean.PayOrderBean;
 import com.example.wdshop.presents.PresenterImpl;
 import com.example.wdshop.view.Iview;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -146,8 +138,9 @@ public class ObligationFragment extends BaseFragment implements Iview {
 
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onDestroy() {
+        super.onDestroy();
         unbinder.unbind();
+        presenter.onDetach();
     }
 }

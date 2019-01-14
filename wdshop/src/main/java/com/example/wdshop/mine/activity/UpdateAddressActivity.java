@@ -181,4 +181,10 @@ public class UpdateAddressActivity extends BaseActivity implements Iview {
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDetach();
+    }
 }

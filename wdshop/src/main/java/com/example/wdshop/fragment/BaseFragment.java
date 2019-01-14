@@ -29,7 +29,7 @@ public abstract class BaseFragment extends Fragment {
         initView(view);
         //初始化数据
         initData();
-        /*setupUI(view);*/
+
     }
 
     protected abstract void initData();

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.wdshop.R;
 import com.example.wdshop.fragment.BaseFragment;
+import com.example.wdshop.shoppingcart.activity.DepailActivity;
 import com.example.wdshop.shoppingcart.activity.ParticularsActivity;
 import com.example.wdshop.home.adaper.CatagralFindAdaper;
 import com.example.wdshop.home.adaper.CatagralOneAdaper;
@@ -317,8 +318,8 @@ public class HomeFragment extends BaseFragment implements Iview {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onDestroy() {
+        super.onDestroy();
         unbinder.unbind();
         presenter.onDetach();
     }
@@ -436,7 +437,10 @@ public class HomeFragment extends BaseFragment implements Iview {
      * 跳转详情
      * */
     private void getJump(int commodityId) {
-        Intent intent = new Intent(getActivity(),ParticularsActivity.class);
+        /*Intent intent = new Intent(getActivity(),ParticularsActivity.class);
+        intent.putExtra("commodityId",commodityId);
+        startActivity(intent);*/
+        Intent intent = new Intent(getActivity(),DepailActivity.class);
         intent.putExtra("commodityId",commodityId);
         startActivity(intent);
     }
@@ -564,9 +568,4 @@ public class HomeFragment extends BaseFragment implements Iview {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        presenter.onDetach();
-    }
 }

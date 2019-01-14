@@ -181,7 +181,6 @@ public class ParticularsActivity extends BaseActivity implements Iview {
      * 同步购物车
      */
     private void getAddCart(List<ShoppCartBean> list) {
-        //String str = "[";
         if (list.size() == 0) {
             list.add(new ShoppCartBean(Integer.valueOf(commodityId), 1));
         } else {
@@ -202,5 +201,11 @@ public class ParticularsActivity extends BaseActivity implements Iview {
         Map<String, String> map = new HashMap<>();
         map.put("data", json);
         presenter.putRequest(Apis.URL_SHOPPING_CART_PUT, map, AddCartBean.class);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDetach();
     }
 }

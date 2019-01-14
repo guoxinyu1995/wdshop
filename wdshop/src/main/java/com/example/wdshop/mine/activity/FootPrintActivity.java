@@ -108,4 +108,9 @@ public class FootPrintActivity extends BaseActivity implements Iview {
         Toast.makeText(FootPrintActivity.this, "请求错误", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDetach();
+    }
 }

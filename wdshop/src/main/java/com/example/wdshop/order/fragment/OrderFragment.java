@@ -18,7 +18,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
+/**
+ *订单的fragment
+ * */
 public class OrderFragment extends BaseFragment{
     @BindView(R.id.all_button)
     ImageButton allButton;
