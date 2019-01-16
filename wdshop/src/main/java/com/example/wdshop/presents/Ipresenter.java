@@ -26,5 +26,5 @@ public interface Ipresenter {
     /**
      * 上传头像
      * */
-    void imagePostRequest(String url, MultipartBody.Part image,Class clazz);
+    void imagePostRequest(String url,Map<String,String> map,Class clazz);
 }

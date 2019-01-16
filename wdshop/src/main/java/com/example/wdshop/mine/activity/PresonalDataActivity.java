@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,14 +23,18 @@ import android.widget.Toast;
 import com.example.wdshop.R;
 import com.example.wdshop.activity.BaseActivity;
 import com.example.wdshop.api.Apis;
+import com.example.wdshop.mine.bean.ImageHeadBean;
 import com.example.wdshop.mine.bean.InformationBean;
 import com.example.wdshop.mine.bean.MineUpdateNameBean;
 import com.example.wdshop.mine.bean.MineUpdatePasswordBean;
 import com.example.wdshop.presents.PresenterImpl;
+import com.example.wdshop.shoppingcart.activity.ParticularsActivity;
+import com.example.wdshop.util.ImageFileUtil;
 import com.example.wdshop.view.Iview;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,6 +67,8 @@ public class PresonalDataActivity extends BaseActivity implements Iview {
     private PopupWindow window;
     private String path = Environment.getExternalStorageDirectory()
             + "/image.png";
+    private String file = Environment.getExternalStorageDirectory()
+            + "/file.png";
     /**
      * 加载视图
      */
@@ -217,14 +224,17 @@ public class PresonalDataActivity extends BaseActivity implements Iview {
                         String newPass = new_edix.getText().toString().trim();
                         if (formerPass.equals("") || newPass.equals("")) {
                             Toast.makeText(PresonalDataActivity.this, "输入不能为空", Toast.LENGTH_SHORT).show();
+                        }else if(formerPass.equals(newPass)){
+                            Toast.makeText(PresonalDataActivity.this, "两次输入的密码一样", Toast.LENGTH_SHORT).show();
                         } else {
                             Map<String, String> map = new HashMap<>();
                             map.put("oldPwd", formerPass);
                             map.put("newPwd", newPass);
                             presenter.putRequest(Apis.URL_UPDATE_PWD_PUT, map, MineUpdatePasswordBean.class);
                             myPassword.setText(newPass);
+                            dialog.dismiss();
                         }
-                        dialog.dismiss();
+
                     }
                 });
                 //取消
@@ -256,6 +266,9 @@ public class PresonalDataActivity extends BaseActivity implements Iview {
         } else if (o instanceof MineUpdatePasswordBean) {
             MineUpdatePasswordBean passwordBean = (MineUpdatePasswordBean) o;
             Toast.makeText(PresonalDataActivity.this, passwordBean.getMessage(), Toast.LENGTH_SHORT).show();
+        }else if(o instanceof ImageHeadBean){
+            ImageHeadBean headBean = (ImageHeadBean) o;
+            Toast.makeText(PresonalDataActivity.this,headBean.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -263,12 +276,8 @@ public class PresonalDataActivity extends BaseActivity implements Iview {
      * 请求失败
      */
     @Override
-    public void requestFail(Object o) {
-        if (o instanceof Exception) {
-            Exception e = (Exception) o;
-            e.printStackTrace();
-        }
-        Toast.makeText(PresonalDataActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+    public void requestFail(String error) {
+        Toast.makeText(PresonalDataActivity.this, error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -314,7 +323,15 @@ public class PresonalDataActivity extends BaseActivity implements Iview {
         }
         if(requestCode == 200 && resultCode == RESULT_OK){
             Bitmap bitmap = data.getParcelableExtra("data");
-            //myProfileSimple.setImageURI();
+            try {
+                ImageFileUtil.setBitmap(bitmap,file,50);
+            }catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(PresonalDataActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+            Map<String,String> map = new HashMap<>();
+            map.put("image",file);
+            presenter.imagePostRequest(Apis.URL_MODEIFY_HEAD_PIC,map,ImageHeadBean.class);
         }
     }
 

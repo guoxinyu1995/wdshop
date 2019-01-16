@@ -201,8 +201,23 @@ public class RetrofitManager<E> {
     /**
      *上传头像
      * */
-    public void imagePost(String url, MultipartBody.Part image,HttpListener listener){
-        baseApis.imagePost(url,image)
+    public static MultipartBody filesMultipar(Map<String,String> map){
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        for(Map.Entry<String,String> entry:map.entrySet()){
+            File file = new File(entry.getValue());
+            builder.addFormDataPart(entry.getKey(),"tp.png",
+                    RequestBody.create(MediaType.parse("multipart/form-data"),file));
+        }
+        builder.setType(MultipartBody.FORM);
+        MultipartBody multipartBody = builder.build();
+        return multipartBody;
+    }
+    public void imagePost(String url, Map<String,String> map,HttpListener listener){
+        if(map == null){
+            map = new HashMap<>();
+        }
+        MultipartBody multipartBody = filesMultipar(map);
+        baseApis.imagePost(url,multipartBody)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(getObserver(listener));

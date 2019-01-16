@@ -88,14 +88,26 @@ public class PresenterImpl implements Ipresenter {
             }
         });
     }
-
     /**
      * 上传头像
      */
     @Override
-    public void imagePostRequest(String url, MultipartBody.Part image, Class clazz) {
+    public void imagePostRequest(String url, Map<String, String> map, Class clazz) {
+        model.requestImagePost(url, map, clazz, new MyCallBack() {
+            @Override
+            public void onSuccess(Object data) {
+                mIview.requestData(data);
+            }
 
+            @Override
+            public void onFail(String error) {
+                mIview.requestFail(error);
+            }
+        });
     }
+
+
+
 
     public void onDetach() {
         if (model != null) {

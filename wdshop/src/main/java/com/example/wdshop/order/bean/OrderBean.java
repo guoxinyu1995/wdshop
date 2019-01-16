@@ -1,8 +1,9 @@
 package com.example.wdshop.order.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class OrderBean {
+public class OrderBean implements Serializable {
 
     private String message;
     private String status;
@@ -35,7 +36,7 @@ public class OrderBean {
         this.orderList = orderList;
     }
 
-    public static class OrderListBean {
+    public static class OrderListBean implements Serializable{
 
         private String expressCompName;
         private String expressSn;
@@ -119,7 +120,7 @@ public class OrderBean {
             this.detailList = detailList;
         }
 
-        public static class DetailListBean {
+        public static class DetailListBean implements Serializable{
 
             private int commentStatus;
             private int commodityCount;

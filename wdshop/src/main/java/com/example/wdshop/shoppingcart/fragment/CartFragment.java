@@ -127,13 +127,12 @@ public class CartFragment extends BaseFragment implements Iview {
         }
     }
 
+    /**
+     * 请求失败
+     */
     @Override
-    public void requestFail(Object o) {
-        if (o instanceof Exception) {
-            Exception e = (Exception) o;
-            e.printStackTrace();
-        }
-        Toast.makeText(getActivity(), "请求错误", Toast.LENGTH_SHORT).show();
+    public void requestFail(String error) {
+        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -150,7 +149,8 @@ public class CartFragment extends BaseFragment implements Iview {
                 if(checkList!=null){
                     Intent intent = new Intent(getActivity(),CloseActivity.class);
                     intent.putParcelableArrayListExtra("checkList",checkList);
-                    startActivity(intent);
+                    //startActivity(intent);
+                    startActivityForResult(intent,100);
                 }else{
                     Toast.makeText(getActivity(), "请选择要提交的商品", Toast.LENGTH_SHORT).show();
                 }
@@ -174,6 +174,20 @@ public class CartFragment extends BaseFragment implements Iview {
             total.setText("￥"+totalPrice);
         }else{
             total.setText("￥0.00");
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==100 && resultCode==200){
+          /*for (int i = 0; i <checkList.size() ; i++) {
+                if(checkList.get(i).isChecked()){
+                    checkList.remove(i);
+                }
+            }
+            carAdapter.setmResult(checkList);*/
+            presenter.getRequest(Apis.URL_FIND_CART_GET, FindShoppingCartBean.class);
         }
     }
 }

@@ -28,7 +28,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/**
+ * 详情的Activity
+ * */
 public class DepailActivity extends BaseActivity implements Iview {
     @BindView(R.id.details_viewpager_show)
     Banner detailsViewpagerShow;
@@ -44,8 +46,8 @@ public class DepailActivity extends BaseActivity implements Iview {
     WebView detailsImageDetails;
     @BindView(R.id.details_textview_describe)
     TextView detailsTextviewDescribe;
-   /* @BindView(R.id.details_Image_describe)
-    SimpleDraweeView detailsImageDescribe;*/
+   @BindView(R.id.details_Image_describe)
+    SimpleDraweeView detailsImageDescribe;
     @BindView(R.id.details_recview_comments)
     RecyclerView detailsRecviewComments;
     @BindView(R.id.details_textview_comments)
@@ -130,14 +132,17 @@ public class DepailActivity extends BaseActivity implements Iview {
                 detailsTextviewSold.setText("已售" + particularsBean.getResult().getSaleNum() + "件");
                 detailsTextviewTitle.setText(particularsBean.getResult().getCommodityName());
                 detailsTextviewWeight.setText(particularsBean.getResult().getWeight() + "kg");
-                //detailsTextviewDescribe.setText(particularsBean.getResult().getDescribe());
+                detailsTextviewDescribe.setText(particularsBean.getResult().getDescribe());
                 detailsImageDetails.loadDataWithBaseURL(null, particularsBean.getResult().getDetails(), "text/html", "utf-8", null);
             }
         }
     }
 
+    /**
+     * 请求失败
+     */
     @Override
-    public void requestFail(Object o) {
-
+    public void requestFail(String error) {
+        Toast.makeText(DepailActivity.this, error, Toast.LENGTH_SHORT).show();
     }
 }

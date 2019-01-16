@@ -10,6 +10,7 @@ import com.example.wdshop.R;
 import com.example.wdshop.api.Apis;
 import com.example.wdshop.fragment.BaseFragment;
 import com.example.wdshop.order.activity.PayMentActivity;
+import com.example.wdshop.order.activity.RemaitActivity;
 import com.example.wdshop.order.adaper.OrdelAllAdaper;
 import com.example.wdshop.order.adaper.OrderWaitAdaper;
 import com.example.wdshop.order.bean.DeleteOrderBean;
@@ -141,12 +142,8 @@ public class AllFragment extends BaseFragment implements Iview {
      * 请求失败
      */
     @Override
-    public void requestFail(Object o) {
-        if (o instanceof Exception) {
-            Exception e = (Exception) o;
-            e.printStackTrace();
-        }
-        Toast.makeText(getActivity(), "请求错误", Toast.LENGTH_SHORT).show();
+    public void requestFail(String erroe) {
+        Toast.makeText(getActivity(), erroe, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -122,6 +122,7 @@
             android:textSize="@dimen/sp_12"
             android:textColor="#999999"
             android:text="123456"
+            android:password="true"
             />
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

@@ -2,6 +2,8 @@ package com.example.wdshop.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -40,8 +42,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void initView(Bundle savedInstanceState);
 
-
-
     //动态注册权限
     private void stateNetWork() {
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
@@ -63,6 +63,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     Manifest.permission.WRITE_APN_SETTINGS,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.ACCESS_NETWORK_STATE,
             };
             ActivityCompat.requestPermissions(this,mStatenetwork,100);
         }

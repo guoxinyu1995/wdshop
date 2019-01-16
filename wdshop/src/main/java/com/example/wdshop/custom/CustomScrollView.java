@@ -3,7 +3,9 @@ package com.example.wdshop.custom;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ScrollView;
-
+/**
+ * 自定义scrollview用于展示详情
+ * */
 public class CustomScrollView extends ScrollView {
     public CustomScrollView(Context context) {
         super(context);

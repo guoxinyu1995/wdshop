@@ -4,6 +4,7 @@ import java.util.Map;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -36,7 +37,6 @@ public interface BaseApis<E> {
     @PUT
     Observable<ResponseBody> put(@Url String url, @QueryMap Map<String, String> map);
 
-    @Multipart
     @POST
-    Observable<ResponseBody> imagePost(@Url String url, @Part MultipartBody.Part image);
+    Observable<ResponseBody> imagePost(@Url String url, @Body MultipartBody multipartBody);
 }

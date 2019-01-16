@@ -93,7 +93,7 @@ public class ParticularsActivity extends BaseActivity implements Iview {
                 return simpleDraweeView;
             }
         });
-        //支持缩放，默认为true。是下面那个的前提。
+        //支持缩放，默认为true。
         webview.getSettings().setSupportZoom(true);
         //设置内置的缩放控件。
         webview.getSettings().setBuiltInZoomControls(true);
@@ -152,12 +152,8 @@ public class ParticularsActivity extends BaseActivity implements Iview {
      * 请求失败
      */
     @Override
-    public void requestFail(Object o) {
-        if (o instanceof Exception) {
-            Exception e = (Exception) o;
-            e.printStackTrace();
-        }
-        Toast.makeText(ParticularsActivity.this, "请求错误", Toast.LENGTH_SHORT).show();
+    public void requestFail(String error) {
+        Toast.makeText(ParticularsActivity.this, error, Toast.LENGTH_SHORT).show();
     }
 
     @OnClick({R.id.add, R.id.buy})

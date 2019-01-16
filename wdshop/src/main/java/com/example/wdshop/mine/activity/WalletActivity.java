@@ -99,12 +99,8 @@ public class WalletActivity extends BaseActivity implements Iview {
      * 请求失败
      */
     @Override
-    public void requestFail(Object o) {
-        if (o instanceof Exception) {
-            Exception e = (Exception) o;
-            e.printStackTrace();
-        }
-        Toast.makeText(WalletActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+    public void requestFail(String error) {
+        Toast.makeText(WalletActivity.this, error, Toast.LENGTH_SHORT).show();
     }
 
     @Override

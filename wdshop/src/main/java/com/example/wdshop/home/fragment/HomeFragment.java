@@ -309,12 +309,8 @@ public class HomeFragment extends BaseFragment implements Iview {
      * 请求失败
      */
     @Override
-    public void requestFail(Object o) {
-        if (o instanceof Exception) {
-            Exception e = (Exception) o;
-            e.printStackTrace();
-        }
-        Toast.makeText(getActivity(), "网络请求错误", Toast.LENGTH_SHORT).show();
+    public void requestFail(String error) {
+        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -437,12 +433,12 @@ public class HomeFragment extends BaseFragment implements Iview {
      * 跳转详情
      * */
     private void getJump(int commodityId) {
-        /*Intent intent = new Intent(getActivity(),ParticularsActivity.class);
-        intent.putExtra("commodityId",commodityId);
-        startActivity(intent);*/
-        Intent intent = new Intent(getActivity(),DepailActivity.class);
+        Intent intent = new Intent(getActivity(),ParticularsActivity.class);
         intent.putExtra("commodityId",commodityId);
         startActivity(intent);
+        /*Intent intent = new Intent(getActivity(),DepailActivity.class);
+        intent.putExtra("commodityId",commodityId);
+        startActivity(intent);*/
     }
     /**
      * 加载更多请求数据的方法

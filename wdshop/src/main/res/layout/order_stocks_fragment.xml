@@ -12,4 +12,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="敬请期待"
+        android:textColor="#f06f06"
+        android:textSize="@dimen/sp_20"
+        android:visibility="gone"/>
 </android.support.constraint.ConstraintLayout>

@@ -97,15 +97,11 @@ public class FootPrintActivity extends BaseActivity implements Iview {
         }
     }
     /**
-     * 加载失败
-     * */
+     * 请求失败
+     */
     @Override
-    public void requestFail(Object o) {
-        if (o instanceof Exception) {
-            Exception e = (Exception) o;
-            e.printStackTrace();
-        }
-        Toast.makeText(FootPrintActivity.this, "请求错误", Toast.LENGTH_SHORT).show();
+    public void requestFail(String error) {
+        Toast.makeText(FootPrintActivity.this, error, Toast.LENGTH_SHORT).show();
     }
 
     @Override

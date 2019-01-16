@@ -14,20 +14,21 @@ import android.widget.TextView;
 import com.example.wdshop.R;
 import com.example.wdshop.order.bean.OrderBean;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-/**
- * 待评价一级Adaper
- * */
-public class OrderRemaitAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+/**
+ * 完成一级Adaper
+ */
+public class OrderStockAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<OrderBean.OrderListBean> mOrder;
     private Context mContext;
 
-    public OrderRemaitAdaper(Context mContext) {
+    public OrderStockAdaper(Context mContext) {
         this.mContext = mContext;
         mOrder = new ArrayList<>();
     }
@@ -54,36 +55,31 @@ public class OrderRemaitAdaper extends RecyclerView.Adapter<RecyclerView.ViewHol
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.order_remait_fragment_item, viewGroup, false);
-        ViewHolderRemait holderRemait = new ViewHolderRemait(view);
-        return holderRemait;
+        View view = LayoutInflater.from(mContext).inflate(R.layout.order_stocks_fragment_item, viewGroup, false);
+        ViewHolderStock holderStock = new ViewHolderStock(view);
+        return holderStock;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
-        ViewHolderRemait holderRemait = (ViewHolderRemait) viewHolder;
-        holderRemait.mark.setText(mOrder.get(i).getOrderId());
+        ViewHolderStock holderStock = (ViewHolderStock) viewHolder;
+        holderStock.mark.setText(mOrder.get(i).getOrderId());
+        //设置时间类型
+        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(
+                new java.util.Date(mOrder.get(i).getOrderTime()));
+        holderStock.time.setText(date);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
-        holderRemait.recycleTitle.setLayoutManager(layoutManager);
-        OrderRemaitItemAdaper remaitItemAdaper = new OrderRemaitItemAdaper(mContext);
-        holderRemait.recycleTitle.setAdapter(remaitItemAdaper);
-        remaitItemAdaper.setmData(mOrder.get(i).getDetailList());
+        holderStock.recycleTitle.setLayoutManager(layoutManager);
+        OrderStockItemAdaper stockItemAdaper = new OrderStockItemAdaper(mContext);
+        holderStock.recycleTitle.setAdapter(stockItemAdaper);
+        stockItemAdaper.setmData(mOrder.get(i).getDetailList());
         //删除
-        holderRemait.delete.setOnClickListener(new View.OnClickListener() {
+        holderStock.del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(callBackDel!=null){
                     callBackDel.callBack(mOrder.get(i).getOrderId(),i);
-                }
-            }
-        });
-        //回调
-        remaitItemAdaper.setCallBackRemaitItem(new OrderRemaitItemAdaper.CallBackRemaitItem() {
-            @Override
-            public void callBack(OrderBean.OrderListBean.DetailListBean dataBean) {
-                if(callBackRemait!=null){
-                    callBackRemait.callBackRem(mOrder.get(i).getOrderId(),dataBean);
                 }
             }
         });
@@ -94,22 +90,25 @@ public class OrderRemaitAdaper extends RecyclerView.Adapter<RecyclerView.ViewHol
         return mOrder.size();
     }
 
-    class ViewHolderRemait extends RecyclerView.ViewHolder {
+    class ViewHolderStock extends RecyclerView.ViewHolder {
         @BindView(R.id.dingdan)
         TextView dingdan;
         @BindView(R.id.mark)
         TextView mark;
-        @BindView(R.id.delete)
-        TextView delete;
+        @BindView(R.id.del)
+        TextView del;
         @BindView(R.id.recycle_title)
         RecyclerView recycleTitle;
+        @BindView(R.id.time)
+        TextView time;
         @BindView(R.id.order_constr)
         ConstraintLayout orderConstr;
-        public ViewHolderRemait(@NonNull View itemView) {
+        public ViewHolderStock(@NonNull View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
+
     /**定义接口删除订单*/
     private CallBackDel callBackDel;
     public void setCallBackDel(CallBackDel callBackDel){
@@ -117,13 +116,5 @@ public class OrderRemaitAdaper extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
     public interface CallBackDel{
         void callBack(String orderId,int position);
-    }
-    //定义接口回传至
-    private CallBackRemait callBackRemait;
-    public void setCallBackRemait(CallBackRemait callBackRemait){
-        this.callBackRemait = callBackRemait;
-    }
-    public interface CallBackRemait{
-       void callBackRem(String orderId,OrderBean.OrderListBean.DetailListBean dataBean);
     }
 }

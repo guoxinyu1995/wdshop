@@ -130,13 +130,12 @@ public class MineFragment extends BaseFragment implements Iview {
     /**
      * 加载失败
      * */
+    /**
+     * 请求失败
+     */
     @Override
-    public void requestFail(Object o) {
-        if(o instanceof Exception){
-            Exception e = (Exception) o;
-            e.printStackTrace();
-        }
-        Toast.makeText(getActivity(),"请求错误",Toast.LENGTH_SHORT).show();
+    public void requestFail(String error) {
+        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Override

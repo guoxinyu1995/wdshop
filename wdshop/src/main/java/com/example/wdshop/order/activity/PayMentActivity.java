@@ -128,12 +128,8 @@ public class PayMentActivity extends BaseActivity implements Iview {
      * 请求失败
      */
     @Override
-    public void requestFail(Object o) {
-        if (o instanceof Exception) {
-            Exception e = (Exception) o;
-            e.printStackTrace();
-        }
-        Toast.makeText(PayMentActivity.this, "请求错误", Toast.LENGTH_SHORT).show();
+    public void requestFail(String error) {
+        Toast.makeText(PayMentActivity.this, error, Toast.LENGTH_SHORT).show();
     }
 
     @OnClick({R.id.text, R.id.homebutton, R.id.examinebutton, R.id.goon,R.id.balancepaid_radio,R.id.wechat_radio,

@@ -26,5 +26,5 @@ public interface Imodel {
     /**
      * 上传头像
      * */
-    void requestImagePost(String url, MultipartBody.Part image,Class clazz,MyCallBack myCallBack);
+    void requestImagePost(String url,Map<String,String> map,Class clazz,MyCallBack myCallBack);
 }

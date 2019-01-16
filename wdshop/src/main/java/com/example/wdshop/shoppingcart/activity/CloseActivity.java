@@ -100,6 +100,7 @@ public class CloseActivity extends BaseActivity implements Iview {
         totalPrice.setText("共" + num + "件商品，需付款" + totalPrice1 + "元");
         //将集合传到适配器
         shoppAdaaper.setList(checkList);
+        setResult(200,intent);
         //加载地址的view
         getAddressView();
         //查询地址的接口
@@ -202,13 +203,12 @@ public class CloseActivity extends BaseActivity implements Iview {
     /**
      * 请求失败
      */
+    /**
+     * 请求失败
+     */
     @Override
-    public void requestFail(Object o) {
-        if (o instanceof Exception) {
-            Exception e = (Exception) o;
-            e.printStackTrace();
-        }
-        Toast.makeText(CloseActivity.this, "请求错误", Toast.LENGTH_SHORT).show();
+    public void requestFail(String error) {
+        Toast.makeText(CloseActivity.this, "当前没有默认地址", Toast.LENGTH_SHORT).show();
     }
 
     /**
