@@ -2,6 +2,7 @@ package com.example.wdshop.shoppingcart.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -221,7 +222,7 @@ public class CloseActivity extends BaseActivity implements Iview {
         switch (view.getId()) {
             case R.id.add_address:
                 Intent intent = new Intent(CloseActivity.this, NewAddressActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,100);
                 break;
             case R.id.but_obtain:
                 if (flag) {
@@ -245,6 +246,14 @@ public class CloseActivity extends BaseActivity implements Iview {
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==100&&resultCode==200){
+            presenter.getRequest(Apis.URL_RECEIVE_ADDRESS_LIST_GET, AddressBean.class);
         }
     }
 

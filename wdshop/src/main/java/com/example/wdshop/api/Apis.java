@@ -158,4 +158,16 @@ public class Apis {
      * 请求方式:POST
      * */
     public static final String URL_MODEIFY_HEAD_PIC = "user/verify/v1/modifyHeadPic";
+    /**
+     *  我的圈子
+     * 接口地址：http://172.17.8.100/small/circle/verify/v1/findMyCircleById
+     * 请求方式:GET
+     * */
+    public static final String URL_FIND_CIRCLE_BY_ID_GET = "circle/verify/v1/findMyCircleById?page=%d&count=%d";
+    /**
+     * 删除我发表过的圈子
+     * 接口地址：http://172.17.8.100/small/circle/verify/v1/deleteCircle
+     * 请求方式:DELETE
+     * */
+    public static final String URL_DELETE_CIRCLE_DELETE = "circle/verify/v1/deleteCircle?circleId=%d";
 }

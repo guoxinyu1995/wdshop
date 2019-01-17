@@ -1,5 +1,6 @@
 package com.example.wdshop.mine.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -11,6 +12,7 @@ import com.example.wdshop.mine.adaper.FootPrintAdaper;
 import com.example.wdshop.api.Apis;
 import com.example.wdshop.mine.bean.FootPrintBean;
 import com.example.wdshop.presents.PresenterImpl;
+import com.example.wdshop.shoppingcart.activity.ParticularsActivity;
 import com.example.wdshop.view.Iview;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
@@ -72,6 +74,14 @@ public class FootPrintActivity extends BaseActivity implements Iview {
             @Override
             public void onLoadMore() {
                 initData();
+            }
+        });
+        printAdaper.setCallBackFoot(new FootPrintAdaper.CallBackFoot() {
+            @Override
+            public void callBack(int commodityId) {
+                Intent intent = new Intent(FootPrintActivity.this,ParticularsActivity.class);
+                intent.putExtra("commodityId",commodityId);
+                startActivity(intent);
             }
         });
     }

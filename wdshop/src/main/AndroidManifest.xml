@@ -47,6 +47,7 @@
         <activity android:name=".order.activity.PayMentActivity"/>
         <activity android:name=".shoppingcart.activity.DepailActivity"/>
         <activity android:name=".order.activity.RemaitActivity"/>
+        <activity android:name=".mine.activity.MyCircleActivity"/>
     </application>
 
 </manifest>

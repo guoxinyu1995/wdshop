@@ -50,7 +50,7 @@ public class SearchAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
         ViewHolderSearch holderSearch = (ViewHolderSearch) viewHolder;
-        holderSearch.findPrice.setText("￥:"+mResult.get(i).getPrice());
+        holderSearch.findPrice.setText("￥"+mResult.get(i).getPrice());
         holderSearch.findTitle.setText(mResult.get(i).getCommodityName());
         holderSearch.searchSimple.setImageURI(Uri.parse(mResult.get(i).getMasterPic()));
         holderSearch.layout.setOnClickListener(new View.OnClickListener() {

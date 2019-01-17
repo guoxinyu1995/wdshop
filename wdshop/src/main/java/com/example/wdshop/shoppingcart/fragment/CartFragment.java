@@ -146,7 +146,7 @@ public class CartFragment extends BaseFragment implements Iview {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_close:
-                if(checkList!=null){
+                if(checkList.size()!=0){
                     Intent intent = new Intent(getActivity(),CloseActivity.class);
                     intent.putParcelableArrayListExtra("checkList",checkList);
                     //startActivity(intent);
@@ -181,12 +181,6 @@ public class CartFragment extends BaseFragment implements Iview {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==100 && resultCode==200){
-          /*for (int i = 0; i <checkList.size() ; i++) {
-                if(checkList.get(i).isChecked()){
-                    checkList.remove(i);
-                }
-            }
-            carAdapter.setmResult(checkList);*/
             presenter.getRequest(Apis.URL_FIND_CART_GET, FindShoppingCartBean.class);
         }
     }

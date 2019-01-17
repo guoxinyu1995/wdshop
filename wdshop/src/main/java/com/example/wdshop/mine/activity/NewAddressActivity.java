@@ -58,8 +58,8 @@ public class NewAddressActivity extends BaseActivity implements Iview {
 
     @Override
     protected void initData() {
-        Intent intent = getIntent();
-        setResult(200, intent);
+       // Intent intent = getIntent();
+
     }
 
     @Override
@@ -74,6 +74,8 @@ public class NewAddressActivity extends BaseActivity implements Iview {
         if (o instanceof AddAddressBean) {
             AddAddressBean addressBean = (AddAddressBean) o;
             Toast.makeText(NewAddressActivity.this, addressBean.getMessage(), Toast.LENGTH_SHORT).show();
+            setResult(200);
+            finish();
         }
     }
 
@@ -90,7 +92,6 @@ public class NewAddressActivity extends BaseActivity implements Iview {
         switch (view.getId()) {
             case R.id.save:
                 getData();
-                finish();
                 break;
             case R.id.area_image:
                 //判断输入法的隐藏状态

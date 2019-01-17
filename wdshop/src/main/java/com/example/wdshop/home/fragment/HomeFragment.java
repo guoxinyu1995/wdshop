@@ -349,8 +349,7 @@ public class HomeFragment extends BaseFragment implements Iview {
                 String shop = homeEditxSearch.getText().toString().trim();
                 presenter.getRequest(String.format(Apis.URL_SEARCH_GET, shop, mPage, mCount), SearchBean.class);
                 getSearch();
-                homeEditxSearch.setText("" +
-                        "");
+                homeEditxSearch.setText("" + "");
                 break;
             //热销商品加载更多
             case R.id.hot_image_btn:

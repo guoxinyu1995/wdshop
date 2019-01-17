@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.wdshop.R;
@@ -53,7 +54,7 @@ public class FootPrintAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
         ViewHolderFoot holderFoot = (ViewHolderFoot) viewHolder;
         holderFoot.fpTitle.setText(mResult.get(i).getCommodityName());
         holderFoot.fpPrice.setText("￥"+mResult.get(i).getPrice());
@@ -63,6 +64,15 @@ public class FootPrintAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolde
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(
                 new java.util.Date(mResult.get(i).getBrowseTime()));
         holderFoot.browsetime.setText(date);
+        //跳转详情
+        holderFoot.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(callBackFoot!=null){
+                    callBackFoot.callBack(mResult.get(i).getCommodityId());
+                }
+            }
+        });
     }
 
     @Override
@@ -81,9 +91,19 @@ public class FootPrintAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView browsenum;
         @BindView(R.id.browsetime)
         TextView browsetime;
+        @BindView(R.id.relate)
+        RelativeLayout layout;
         public ViewHolderFoot(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
+    }
+    //定义接口跳转详情
+    private CallBackFoot callBackFoot;
+    public void setCallBackFoot(CallBackFoot callBackFoot){
+        this.callBackFoot = callBackFoot;
+    }
+    public interface CallBackFoot{
+        void callBack(int commodityId);
     }
 }

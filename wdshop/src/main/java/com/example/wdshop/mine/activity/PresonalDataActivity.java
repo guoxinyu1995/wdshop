@@ -163,6 +163,7 @@ public class PresonalDataActivity extends BaseActivity implements Iview {
                 window.dismiss();
             }
         });
+
     }
 
     @OnClick({R.id.my_profile_text, R.id.my_profile_simple, R.id.my_nickname, R.id.my_password})

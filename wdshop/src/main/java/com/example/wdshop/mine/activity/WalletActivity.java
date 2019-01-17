@@ -43,7 +43,7 @@ public class WalletActivity extends BaseActivity implements Iview {
     private PresenterImpl presenter;
     private WalletAdaper walletAdaper;
     private int mPage = 1;
-    private int mCount = 1;
+    private int mCount = 20;
     /**
      * 加载布局
      */
