@@ -35,7 +35,7 @@ public class CircleFragment extends BaseFragment implements Iview {
     private PresenterImpl presenter;
     private CircleAdaper adaper;
     private int mPage;
-    private int count = 5;
+    private int count = 10;
     /**
      * 初始化数据
      */
@@ -119,7 +119,6 @@ public class CircleFragment extends BaseFragment implements Iview {
                 mPage++;
                 xrecycleview.refreshComplete();
                 xrecycleview.loadMoreComplete();
-
             }
             //点赞
         } else if (o instanceof CircleGivePraiseBean) {

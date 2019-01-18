@@ -52,7 +52,7 @@
             android:textColor="#666"
             android:layout_below="@id/top_simple"
             />
-        <ImageView
+        <com.example.wdshop.custom.CustomMultiImageView
             android:id="@+id/center_simple"
             android:layout_below="@id/circle_title"
             android:layout_marginTop="@dimen/dp_10"

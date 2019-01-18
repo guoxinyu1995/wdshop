@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.wdshop.R;
+import com.example.wdshop.custom.CustomMultiImageView;
 import com.example.wdshop.mycircle.bean.CircleBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -65,8 +66,14 @@ public class CircleAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         holderCircleImage.circleName.setText(mResult.get(i).getNickName());
         //设置内容
         holderCircleImage.circleTitle.setText(mResult.get(i).getContent());
+        String[] image = mResult.get(i).getImage().split("\\,");
+        List<String> sList = new ArrayList<>();
+        for(int a = 0;a<image.length;a++){
+            sList.add(image[a]);
+        }
+        holderCircleImage.centerSimple.setList(sList);
         //设置图片
-        Glide.with(mContext).load(mResult.get(i).getImage()).into(holderCircleImage.centerSimple);
+        //Glide.with(mContext).load(mResult.get(i).getImage()).into(holderCircleImage.centerSimple);
         //设置时间类型
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(
                 new java.util.Date(mResult.get(i).getCreateTime()));
@@ -119,7 +126,7 @@ public class CircleAdaper extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         @BindView(R.id.circle_title)
         TextView circleTitle;
         @BindView(R.id.center_simple)
-        ImageView centerSimple;
+        CustomMultiImageView centerSimple;
         @BindView(R.id.button_praise)
         ImageView buttonPraise;
         @BindView(R.id.text_num)

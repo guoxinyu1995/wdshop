@@ -146,7 +146,7 @@ public class CartFragment extends BaseFragment implements Iview {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_close:
-                if(checkList.size()!=0){
+                if(checkList!=null && checkList.size()!=0){
                     Intent intent = new Intent(getActivity(),CloseActivity.class);
                     intent.putParcelableArrayListExtra("checkList",checkList);
                     //startActivity(intent);

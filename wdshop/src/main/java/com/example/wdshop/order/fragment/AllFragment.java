@@ -63,7 +63,7 @@ public class AllFragment extends BaseFragment implements Iview {
         allAdaper = new OrdelAllAdaper(getActivity());
         recycleview.setAdapter(allAdaper);
         recycleview.setPullRefreshEnabled(true);
-        recycleview.setPullRefreshEnabled(true);
+        recycleview.setLoadingMoreEnabled(true);
         recycleview.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {

@@ -10,6 +10,7 @@ import com.example.wdshop.R;
 import com.example.wdshop.mine.activity.AddressActivity;
 import com.example.wdshop.mine.activity.FootPrintActivity;
 import com.example.wdshop.mine.activity.MyCircleActivity;
+import com.example.wdshop.mine.activity.MyCircleActivity1;
 import com.example.wdshop.mine.activity.PresonalDataActivity;
 import com.example.wdshop.mine.activity.WalletActivity;
 import com.example.wdshop.api.Apis;
@@ -84,7 +85,7 @@ public class MineFragment extends BaseFragment implements Iview {
                 startActivityForResult(intent,100);
                 break;
             case R.id.circle_text:
-                Intent intent_circle = new Intent(getActivity(),MyCircleActivity.class);
+                Intent intent_circle = new Intent(getActivity(),MyCircleActivity1.class);
                 startActivity(intent_circle);
                 break;
             case R.id.footprint_text:

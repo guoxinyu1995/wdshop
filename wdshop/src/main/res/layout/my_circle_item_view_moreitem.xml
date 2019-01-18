@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
@@ -14,7 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
-            android:layout_marginRight="@dimen/dp_5"
+            android:layout_marginRight="@dimen/dp_10"
+            android:visibility="gone"
             />
         <RelativeLayout
             android:layout_width="@dimen/dp_312"
@@ -22,12 +24,9 @@
             android:paddingLeft="@dimen/dp_10"
             android:paddingTop="@dimen/dp_20"
             android:paddingBottom="@dimen/dp_20"
-            android:layout_height="wrap_content"
             android:background="@drawable/circle_shape"
-            android:elevation="@dimen/dp_3"
-            android:padding="@dimen/dp_10"
             android:layout_marginBottom="@dimen/dp_10"
-            >
+            android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/circle_content"
                 android:layout_width="match_parent"
@@ -36,18 +35,12 @@
             <com.facebook.drawee.view.SimpleDraweeView
                 android:layout_below="@+id/circle_content"
                 android:id="@+id/circle_image01"
-                android:layout_width="@dimen/dp_140"
-                android:layout_height="@dimen/dp_140"
+                android:layout_width="@dimen/dp_90"
+                android:layout_height="@dimen/dp_90"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
                 />
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:layout_below="@+id/circle_content"
-                android:id="@+id/circle_image02"
-                android:layout_width="@dimen/dp_140"
-                android:layout_height="@dimen/dp_140"
-                android:layout_toRightOf="@id/circle_image01"
-                android:layout_marginTop="@dimen/dp_10"/>
+
             <TextView
                 android:id="@+id/circle_time"
                 android:text="243243243"
