@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -222,6 +223,35 @@ public class RetrofitManager<E> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(getObserver(listener));
     }
+    /**
+     * 上传多张图片
+     */
+    public void postFileMore(String url, Map<String, Object> map,HttpListener listener) {
+        if (map == null) {
+            map = new HashMap<>();
+        }
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        builder.addFormDataPart("commodityId", String.valueOf(map.get("commodityId")));
+        if(!String.valueOf(map.get("orderId")).equals("")){
+            builder.addFormDataPart("orderId", String.valueOf(map.get("orderId")));
+        }
+        builder.addFormDataPart("content", String.valueOf(map.get("content")));
+        if (!map.get("image").equals("")) {
+            List<String> image = (List<String>) map.get("image");
+            for(int i=0;i<image.size();i++){
+                File file = new File(image.get(i));
+                builder.addFormDataPart("image", file.getName(),RequestBody.create(MediaType.parse("multipart/form-data"),file));
+            }
+
+        }
+        builder.setType(MultipartBody.FORM);
+        MultipartBody multipartBody = builder.build();
+        baseApis.imagePost(url, multipartBody)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(getObserver(listener));
+    }
+
     //定义接口
     public interface HttpListener {
         void onSuccess(String data);

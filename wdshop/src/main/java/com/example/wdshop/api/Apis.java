@@ -170,4 +170,9 @@ public class Apis {
      * 请求方式:DELETE
      * */
     public static final String URL_DELETE_CIRCLE_DELETE = "circle/verify/v1/deleteCircle?circleId=%s";
+    /**
+     * 发布圈子 http://172.17.8.100/small/circle/verify/v1/releaseCircle
+     */
+    public static final String URL_RELEASE_CIRCLE_POST="circle/verify/v1/releaseCircle";
+
 }

@@ -106,7 +106,20 @@ public class PresenterImpl implements Ipresenter {
         });
     }
 
+    @Override
+    public void imagesPostRequest(String url, Map<String, Object> map, Class clazz) {
+        model.imagePost(url, map, clazz, new MyCallBack() {
+            @Override
+            public void onSuccess(Object data) {
+                mIview.requestData(data);
+            }
 
+            @Override
+            public void onFail(String error) {
+                mIview.requestFail(error);
+            }
+        });
+    }
 
 
     public void onDetach() {
