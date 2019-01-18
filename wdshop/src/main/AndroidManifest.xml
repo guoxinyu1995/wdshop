@@ -48,7 +48,6 @@
         <activity android:name=".shoppingcart.activity.DepailActivity"/>
         <activity android:name=".order.activity.RemaitActivity"/>
         <activity android:name=".mine.activity.MyCircleActivity"/>
-        <activity android:name=".mine.activity.MyCircleActivity1"/>
     </application>
 
 </manifest>

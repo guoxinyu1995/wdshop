@@ -3,14 +3,14 @@ package com.example.wdshop.mine.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.wdshop.R;
 import com.example.wdshop.activity.BaseActivity;
 import com.example.wdshop.api.Apis;
-import com.example.wdshop.application.MyApplication;
-import com.example.wdshop.mine.adaper.DeleteCircleBean;
+import com.example.wdshop.mine.bean.DeleteCircleBean;
 import com.example.wdshop.mine.adaper.MyCircleAdaper;
 import com.example.wdshop.mine.bean.MyCircleBean;
 import com.example.wdshop.presents.PresenterImpl;
@@ -30,12 +30,12 @@ public class MyCircleActivity extends BaseActivity implements Iview {
     XRecyclerView clrcleRecycle;
     private PresenterImpl presenter;
     private int mPage=1;
-    private boolean flag=false;
+    private boolean falg=true;
     private MyCircleAdaper circleAdapter;
-    private int mCount = 5;
+    private int mCount = 10;
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_circle;
+        return R.layout.activity_circle1;
     }
 
     @Override
@@ -85,7 +85,12 @@ public class MyCircleActivity extends BaseActivity implements Iview {
             }
         }else if(o instanceof DeleteCircleBean){
             DeleteCircleBean deleteCircleBean = (DeleteCircleBean) o;
-            Toast.makeText(MyCircleActivity.this,deleteCircleBean.getMessage(),Toast.LENGTH_SHORT).show();
+            if(deleteCircleBean == null || !deleteCircleBean.isSuccess()){
+                Toast.makeText(MyCircleActivity.this,deleteCircleBean.getMessage(),Toast.LENGTH_SHORT).show();
+            }else{
+                mPage=1;
+                initData();
+            }
         }
     }
 
@@ -94,31 +99,30 @@ public class MyCircleActivity extends BaseActivity implements Iview {
         Toast.makeText(MyCircleActivity.this,error,Toast.LENGTH_SHORT).show();
     }
 
+
     @OnClick(R.id.delete)
     public void onViewClicked() {
-        //点击控制多选框的显示隐藏
-        circleAdapter.setCheckbox(flag);
-        if(!flag){
+        if (falg){
+            circleAdapter.setCheckbox(true);
+        }else {
+            circleAdapter.setCheckbox(false);
             List<MyCircleBean.ResultBean> list = circleAdapter.getList();
-            String s="";
-            for (int i=0;i<list.size();i++){
-                if(list.get(i).isCheck()){
-                    s+=list.get(i).getId()+",";
+            String string="";
+            for (int i =0;i<list.size();i++){
+                if (list.get(i).isCheck()){
+                    string+=list.get(i).getId()+",";
                 }
             }
-            //不为空的时候请求网络 删除圈子
-            if(!s.equals("")){
-                String substring = s.substring(0, s.length() - 1);
-                deleteCircle(substring);
+
+            //请求删除圈子数据
+            if (!string.equals("")){
+                String substring = string.substring(0, string.length() - 1);
+                Log.i("TAG",substring);
+                presenter.deleteRequest(String.format(Apis.URL_DELETE_CIRCLE_DELETE,substring),DeleteCircleBean.class);
             }
+
         }
-        flag=!flag;
-    }
-    /**
-     * 删除
-     * */
-    private void deleteCircle(String substring) {
-        presenter.deleteRequest(String.format(Apis.URL_DELETE_CIRCLE_DELETE,substring),DeleteCircleBean.class);
+        falg=!falg;
     }
 
     @Override

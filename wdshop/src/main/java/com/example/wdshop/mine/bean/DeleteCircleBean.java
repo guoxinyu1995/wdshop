@@ -1,10 +1,13 @@
-package com.example.wdshop.mine.adaper;
+package com.example.wdshop.mine.bean;
 
 public class DeleteCircleBean {
 
     private String message;
     private String status;
-
+    private final String SUCCESS_STATUS = "0000";
+    public boolean isSuccess(){
+        return status.equals(SUCCESS_STATUS);
+    }
     public String getMessage() {
         return message;
     }

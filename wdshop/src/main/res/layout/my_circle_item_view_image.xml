@@ -15,7 +15,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
             android:layout_marginRight="@dimen/dp_10"
-            android:visibility="gone"
             />
         <RelativeLayout
             android:layout_width="@dimen/dp_312"

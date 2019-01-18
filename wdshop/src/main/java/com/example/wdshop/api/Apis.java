@@ -169,5 +169,5 @@ public class Apis {
      * 接口地址：http://172.17.8.100/small/circle/verify/v1/deleteCircle
      * 请求方式:DELETE
      * */
-    public static final String URL_DELETE_CIRCLE_DELETE = "circle/verify/v1/deleteCircle?circleId=%d";
+    public static final String URL_DELETE_CIRCLE_DELETE = "circle/verify/v1/deleteCircle?circleId=%s";
 }
