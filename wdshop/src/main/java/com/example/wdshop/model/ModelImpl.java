@@ -172,7 +172,9 @@ public class ModelImpl implements Imodel {
             }
         });
     }
-
+    /**
+     * 上传多张图
+     * */
     @Override
     public void imagePost(String url, Map<String, Object> map, final Class clazz, final MyCallBack myCallBack) {
         RetrofitManager.getInstance().postFileMore(url, map, new RetrofitManager.HttpListener() {

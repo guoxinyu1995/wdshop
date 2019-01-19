@@ -48,7 +48,7 @@ public class GridViewAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = inflater.inflate(R.layout.grid_item, parent,false);
-        ImageView iv = (ImageView) convertView.findViewById(R.id.pic_iv);
+        ImageView iv = convertView.findViewById(R.id.pic_iv);
         if (position < mList.size()) {
             //代表+号之前的需要正常显示图片
             //图片路径

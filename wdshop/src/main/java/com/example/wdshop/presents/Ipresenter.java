@@ -27,6 +27,8 @@ public interface Ipresenter {
      * 上传头像
      * */
     void imagePostRequest(String url,Map<String,String> map,Class clazz);
-
+    /**
+     * 多图上传
+     * */
     void imagesPostRequest(String url,Map<String,Object> map,Class clazz);
 }

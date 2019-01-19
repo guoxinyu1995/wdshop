@@ -43,7 +43,7 @@ public class PictureSelectorConfig {
                 // 是否压缩 true or false
                 .compress(true)
 //                .compressMaxKB(1024)//压缩最大值kb compressGrade()为Luban.CUSTOM_GEAR有效 int
-//                .compressWH() // 压缩宽高比 compressGrade()为Luban.CUSTOM_GEAR有效  int
+//               .compressWH() // 压缩宽高比 compressGrade()为Luban.CUSTOM_GEAR有效  int
                 // int glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
                 .glideOverride(160, 160)
 //                .withAspectRatio()// int 裁剪比例 如16:9 3:2 3:4 1:1 可自定义

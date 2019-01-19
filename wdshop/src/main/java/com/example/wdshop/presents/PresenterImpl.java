@@ -105,7 +105,9 @@ public class PresenterImpl implements Ipresenter {
             }
         });
     }
-
+    /**
+     * 上传多张图片
+     * */
     @Override
     public void imagesPostRequest(String url, Map<String, Object> map, Class clazz) {
         model.imagePost(url, map, clazz, new MyCallBack() {

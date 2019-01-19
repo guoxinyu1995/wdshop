@@ -27,6 +27,8 @@ public interface Imodel {
      * 上传头像
      * */
     void requestImagePost(String url,Map<String,String> map,Class clazz,MyCallBack myCallBack);
-
+    /**
+     * 上传多张图片
+     * */
     void imagePost(String url,Map<String,Object> map,Class clazz,MyCallBack myCallBack);
 }
